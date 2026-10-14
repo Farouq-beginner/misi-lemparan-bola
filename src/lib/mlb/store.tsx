@@ -23,11 +23,56 @@ export interface Cek3 {
   dicek: boolean
 }
 
+// Jawaban yang khusus dimiliki satu kartu data (A/B/C).
+// Dipisah per kartu supaya jawaban Kartu A tidak ikut terbawa
+// saat murid berganti ke Kartu B atau C.
+export interface JawabanKartu {
+  plot: number[] // x yang sudah terplot (layar 8)
+  simetri: { duo: number[]; sumbu: string; q: string; coba: { sumbu: number; q: number } }
+  aCari: { a: string; coba: number }
+  f5: { s: string[]; coba: number[]; keputusan: '' | 'masuk' | 'tidak' }
+}
+
+export function jawabanKosong(): JawabanKartu {
+  return {
+    plot: [],
+    simetri: { duo: [], sumbu: '', q: '', coba: { sumbu: 0, q: 0 } },
+    aCari: { a: '', coba: 0 },
+    f5: { s: ['', '', '', ''], coba: [0, 0, 0, 0], keputusan: '' },
+  }
+}
+
+/** Gabungkan jawaban tersimpan (bisa sebagian/rusak) dengan bentuk baku. */
+export function gabungJawaban(v?: Partial<JawabanKartu> | null): JawabanKartu {
+  const d = jawabanKosong()
+  if (!v) return d
+  const arr = <T,>(nilai: unknown, fallback: T[], panjang: number): T[] =>
+    Array.isArray(nilai) && nilai.length === panjang ? (nilai as T[]) : fallback
+  return {
+    plot: Array.isArray(v.plot) ? v.plot.filter(n => typeof n === 'number') : d.plot,
+    simetri: {
+      ...d.simetri,
+      ...(v.simetri ?? {}),
+      duo: Array.isArray(v.simetri?.duo) ? v.simetri.duo.filter(n => typeof n === 'number') : d.simetri.duo,
+      coba: { ...d.simetri.coba, ...(v.simetri?.coba ?? {}) },
+    },
+    aCari: { ...d.aCari, ...(v.aCari ?? {}) },
+    f5: {
+      ...d.f5,
+      ...(v.f5 ?? {}),
+      s: arr<string>(v.f5?.s, d.f5.s, 4),
+      coba: arr<number>(v.f5?.coba, d.f5.coba, 4),
+    },
+  }
+}
+
 export interface MLBState {
   v: number
   layar: number // 0..15
   progres: number[] // layar yang sudah dikunjungi
   kartu: CardId | null
+  /** Jawaban tersimpan per kartu — diisi otomatis saat murid berganti kartu. */
+  perKartu: Record<CardId, JawabanKartu>
   pemantik: { q1: string; q2: string }
   dugaan: { lemparan: '' | CardId; alasan: string }
   tebak: Tebakan[] // 3 fungsi
@@ -54,6 +99,7 @@ function defaultState(): MLBState {
     layar: 0,
     progres: [],
     kartu: null,
+    perKartu: { A: jawabanKosong(), B: jawabanKosong(), C: jawabanKosong() },
     pemantik: { q1: '', q2: '' },
     dugaan: { lemparan: '', alasan: '' },
     tebak: [
@@ -93,10 +139,15 @@ function loadState(): MLBState {
       layar: typeof p.layar === 'number' ? Math.min(LAYAR_TERAKHIR, Math.max(0, p.layar)) : d.layar,
       progres: Array.isArray(p.progres) ? p.progres.filter(n => typeof n === 'number' && n >= 0 && n <= LAYAR_TERAKHIR) : d.progres,
       kartu: p.kartu === 'A' || p.kartu === 'B' || p.kartu === 'C' ? p.kartu : null,
+      perKartu: {
+        A: gabungJawaban(p.perKartu?.A),
+        B: gabungJawaban(p.perKartu?.B),
+        C: gabungJawaban(p.perKartu?.C),
+      },
       pemantik: { ...d.pemantik, ...(p.pemantik ?? {}) },
       dugaan: { ...d.dugaan, ...(p.dugaan ?? {}) },
       tebak: d.tebak.map((t, i) => ({ ...t, ...(p.tebak?.[i] ?? {}) })),
-      plot: arr<number>(p.plot, d.plot),
+      plot: Array.isArray(p.plot) ? p.plot.filter(n => typeof n === 'number') : d.plot,
       simetri: {
         ...d.simetri, ...(p.simetri ?? {}),
         duo: arr<number>(p.simetri?.duo, d.simetri.duo),
@@ -127,6 +178,8 @@ function loadState(): MLBState {
 interface Ctx {
   s: MLBState
   upd: (fn: (d: MLBState) => void) => void
+  /** Ganti kartu data: simpan jawaban kartu lama, muat jawaban kartu baru. */
+  gantiKartu: (k: CardId) => void
   goto: (layar: number, replace?: boolean) => void
   resetAll: () => void
   hydrated: boolean
@@ -188,6 +241,30 @@ export function MlbProvider({ children }: { children: React.ReactNode }) {
     })
   }, [])
 
+  /** Ganti kartu data: jawaban kartu lama disimpan, jawaban kartu baru dimuat.
+   *  Jadi jawaban Kartu A tidak terbawa saat murid pindah ke Kartu B/C. */
+  const gantiKartu = useCallback((k: CardId) => {
+    setS(prev => {
+      if (prev.kartu === k) return prev
+      const d: MLBState = JSON.parse(JSON.stringify(prev))
+      if (d.kartu) {
+        d.perKartu[d.kartu] = {
+          plot: d.plot,
+          simetri: d.simetri,
+          aCari: d.aCari,
+          f5: d.f5,
+        }
+      }
+      const jaw = d.perKartu[k] ?? jawabanKosong()
+      d.plot = jaw.plot
+      d.simetri = jaw.simetri
+      d.aCari = jaw.aCari
+      d.f5 = jaw.f5
+      d.kartu = k
+      return d
+    })
+  }, [])
+
   const goto = useCallback((layar: number, replace = false) => {
     const t = Math.min(LAYAR_TERAKHIR, Math.max(0, layar))
     upd(d => {
@@ -225,7 +302,7 @@ export function MlbProvider({ children }: { children: React.ReactNode }) {
   }, [])
 
   return (
-    <MlbContext.Provider value={{ s, upd, goto, resetAll, hydrated }}>
+    <MlbContext.Provider value={{ s, upd, gantiKartu, goto, resetAll, hydrated }}>
       {children}
     </MlbContext.Provider>
   )

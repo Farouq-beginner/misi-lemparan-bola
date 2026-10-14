@@ -12,7 +12,7 @@ import { MiniKurva } from '../grafik'
 import { cn } from '@/lib/utils'
 
 export default function Layar9() {
-  const { s, upd } = useMLB()
+  const { s, upd, gantiKartu } = useMLB()
   const kartu = s.kartu ? CARDS[s.kartu] : null
 
   if (!s.kartu || !kartu) {
@@ -20,8 +20,8 @@ export default function Layar9() {
       <div className="space-y-4">
         <JudulLayar fase={5} judul="Sumbu Simetri" sub="Pilih dulu kartu datamu." />
         <Panel ikon="🃏" title="Kamu belum punya kartu">
-          <p className="text-[14.5px]">Pilih salah satu kartu data — kartu ini akan dipakai di layar 8 sampai 11.</p>
-          <PilihanKartu value="" onChange={k => upd(d => { d.kartu = k })} />
+          <p className="text-[17px]">Pilih salah satu kartu data — kartu ini akan dipakai di layar 8 sampai 11.</p>
+          <PilihanKartu value="" onChange={k => gantiKartu(k)} />
         </Panel>
       </div>
     )

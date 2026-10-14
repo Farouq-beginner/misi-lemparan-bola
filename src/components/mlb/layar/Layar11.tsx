@@ -13,7 +13,7 @@ import { JudulLayar, Panel, Chip, IsiAngka, Tombol, KotakHasil, Petunjuk, PilihK
 import { cn } from '@/lib/utils'
 
 export default function Layar11() {
-  const { s, upd } = useMLB()
+  const { s, upd, gantiKartu } = useMLB()
   const [bukaCek, setBukaCek] = useState(false)
   const kartu = s.kartu ? CARDS[s.kartu] : null
 
@@ -22,8 +22,8 @@ export default function Layar11() {
       <div className="space-y-4">
         <JudulLayar fase={6} judul="Hitung f(5)" sub="Pilih dulu kartu datamu." />
         <Panel ikon="🃏" title="Kamu belum punya kartu">
-          <p className="text-[14.5px]">Pilih salah satu kartu data — kartu ini akan dipakai di layar 8 sampai 11.</p>
-          <PilihanKartu value="" onChange={k => upd(d => { d.kartu = k })} />
+          <p className="text-[17px]">Pilih salah satu kartu data — kartu ini akan dipakai di layar 8 sampai 11.</p>
+          <PilihanKartu value="" onChange={k => gantiKartu(k)} />
         </Panel>
       </div>
     )
@@ -174,9 +174,9 @@ export default function Layar11() {
       )}
 
       <Panel ikon="✅" title="Panel Cek Jawaban: Kartu A, B, C">
-        <p className="text-[14px]">Data ketiga kartu dari tim analis lain. Hitung f(5) dan putuskan masuk/tidak untuk semuanya.</p>
-        <Tombol varian="lembut" className="w-full" onClick={() => setBukaCek(b => !b)}>
-          {bukaCek ? '▲ Tutup panel' : '▼ Buka panel cek jawaban'}
+        <p className="text-[16px]">Data ketiga kartu dari tim analis lain. Hitung f(5) dan putuskan masuk/tidak untuk semuanya.</p>
+        <Tombol varian="primer" className="w-full" onClick={() => setBukaCek(b => !b)}>
+          {bukaCek ? '▲ Tutup panel cek jawaban' : '▼ Buka panel cek jawaban'}
         </Tombol>
         {bukaCek && (
           <div className="space-y-3">

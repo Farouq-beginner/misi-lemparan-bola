@@ -12,7 +12,7 @@ import { JudulLayar, Panel, Chip, Tombol, KotakHasil, GGBButton, PilihanKartu } 
 import { GridTap } from '../grafik'
 
 export default function Layar8() {
-  const { s, upd } = useMLB()
+  const { s, upd, gantiKartu } = useMLB()
   const [flash, setFlash] = useState<number | null>(null)
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null)
 
@@ -47,8 +47,8 @@ export default function Layar8() {
       <div className="space-y-4">
         <JudulLayar fase={5} judul="Plot dan Amati" sub="Pilih dulu kartu datamu." />
         <Panel ikon="🃏" title="Kamu belum punya kartu">
-          <p className="text-[14.5px]">Pilih salah satu kartu data — kartu ini akan dipakai di layar 8 sampai 11.</p>
-          <PilihanKartu value="" onChange={k => upd(d => { d.kartu = k })} />
+          <p className="text-[17px]">Pilih salah satu kartu data — kartu ini akan dipakai di layar 8 sampai 11.</p>
+          <PilihanKartu value="" onChange={k => gantiKartu(k)} />
         </Panel>
       </div>
     )

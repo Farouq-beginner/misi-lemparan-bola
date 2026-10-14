@@ -9,11 +9,16 @@ import { JudulLayar, Panel, Chip, PilihanKartu } from '../bits'
 import type { CardId } from '@/lib/mlb/data'
 
 export default function Layar3() {
-  const { s, upd } = useMLB()
+  const { s, gantiKartu } = useMLB()
 
   const pilih = (k: CardId) => {
-    upd(d => { d.kartu = k })
-    toast.success(`Kartu ${k} dipilih! Kartu ini menemanimu di layar-layar berikutnya.`)
+    const sebelumnya = s.kartu
+    gantiKartu(k)
+    if (sebelumnya && sebelumnya !== k) {
+      toast.success(`Kartu ${k} dipilih. Jawaban Kartu ${sebelumnya} tersimpan, dan kamu mulai dari lembar Kartu ${k}.`)
+    } else {
+      toast.success(`Kartu ${k} dipilih! Kartu ini menemanimu di layar-layar berikutnya.`)
+    }
   }
 
   return (
@@ -60,7 +65,7 @@ export default function Layar3() {
         {s.kartu && (
           <p className="flex items-center gap-2">
             <Chip tone="hijau">✓ Kartu aktif: {s.kartu}</Chip>
-            <span className="text-xs text-slate-400 font-bold">boleh diganti kapan saja</span>
+            <span className="text-[13.5px] text-slate-400 font-bold">boleh diganti kapan saja — jawaban tiap kartu tersimpan sendiri</span>
           </p>
         )}
       </Panel>

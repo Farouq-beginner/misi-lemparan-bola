@@ -11,7 +11,7 @@ import { eqTol, parseNum, fmt } from '@/lib/mlb/util'
 import { JudulLayar, Panel, Chip, IsiAngka, Tombol, KotakHasil, Petunjuk, PilihanKartu } from '../bits'
 
 export default function Layar10() {
-  const { s, upd } = useMLB()
+  const { s, upd, gantiKartu } = useMLB()
   const kartu = s.kartu ? CARDS[s.kartu] : null
 
   if (!s.kartu || !kartu) {
@@ -19,8 +19,8 @@ export default function Layar10() {
       <div className="space-y-4">
         <JudulLayar fase={5} judul="Menemukan Fungsi" sub="Pilih dulu kartu datamu." />
         <Panel ikon="🃏" title="Kamu belum punya kartu">
-          <p className="text-[14.5px]">Pilih salah satu kartu data — kartu ini akan dipakai di layar 8 sampai 11.</p>
-          <PilihanKartu value="" onChange={k => upd(d => { d.kartu = k })} />
+          <p className="text-[17px]">Pilih salah satu kartu data — kartu ini akan dipakai di layar 8 sampai 11.</p>
+          <PilihanKartu value="" onChange={k => gantiKartu(k)} />
         </Panel>
       </div>
     )
