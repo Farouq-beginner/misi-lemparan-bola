@@ -41,14 +41,14 @@ export default function Layar6() {
               aria-selected={idx === i}
               onClick={() => setIdx(i)}
               className={cn(
-                'rounded-2xl px-2 py-2.5 font-extrabold text-[13px] border-2 transition-all active:scale-95 leading-tight',
+                'rounded-2xl px-2 py-2.5 font-extrabold text-[14.5px] border-2 transition-all active:scale-95 leading-tight',
                 idx === i
                   ? 'bg-[#F97316] border-[#EA580C] text-white shadow-md'
                   : 'bg-white border-slate-200 text-[#17345A] hover:border-orange-300',
               )}
             >
               Fungsi {i + 1}
-              <span className="block text-[10.5px] font-bold opacity-75 mt-0.5">{leng ? '✓ ditebak' : 'belum'}</span>
+              <span className="block text-[12px] font-bold opacity-75 mt-0.5">{leng ? '✓ ditebak' : 'belum'}</span>
             </button>
           )
         })}
@@ -56,7 +56,7 @@ export default function Layar6() {
 
       <Panel ikon="📈" title={`${j.fx} — Grafiknya`}>
         <MiniKurva a={j.a} p={j.p} q={j.q} bandingkan />
-        <p className="text-[12px] text-slate-400 font-bold">
+        <p className="text-[13.5px] text-slate-400 font-bold">
           Garis putus-putus: y = x² sebagai pembanding. Titik oranye = puncak.
         </p>
       </Panel>
@@ -88,7 +88,7 @@ export default function Layar6() {
       {isi ? (
         <Panel tone="oranye" ikon="🧭" title="Kartu Perubahan & Diskusi">
           <p className="font-extrabold text-[#17345A]">💬 {j.tanya}</p>
-          <p className="text-[14.5px]">{j.perubahan}</p>
+          <p className="text-[17px]">{j.perubahan}</p>
           {semuaOk && <Chip tone="hijau">mantap, analisismu konsisten!</Chip>}
         </Panel>
       ) : (

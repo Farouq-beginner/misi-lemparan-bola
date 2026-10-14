@@ -50,13 +50,13 @@ export default function Layar10() {
       <JudulLayar fase={5} judul="Menemukan Fungsi Lintasan" sub="Puncak sudah ketemu (p ; q). Sekarang cari a lewat titik lepas (0 ; 2)." />
 
       <Panel tone="oranye" ikon="🎓" title="Contoh dengan Kartu Latihan">
-        <p className="text-[14px]">
+        <p className="text-[16px]">
           Diketahui puncak <b>(2 ; 3)</b> → f(x) = a(x − 2)² + 3. Bola lepas dari <b>(0 ; 2)</b>, artinya <b>f(0) = 2</b>:
         </p>
-        <p className="text-[14px] font-bold text-[#17345A]">
+        <p className="text-[16px] font-bold text-[#17345A]">
           2 = a(0 − 2)² + 3 → 2 = 4a + 3 → 4a = −1 → <span className="text-[#B45309]">a = −0,25</span>
         </p>
-        <p className="text-[14px]">Jadi f(x) = <b>{CONTOH.fx}</b>. Tanda a negatif — grafik terbuka ke bawah seperti lintasan bola!</p>
+        <p className="text-[16px]">Jadi f(x) = <b>{CONTOH.fx}</b>. Tanda a negatif — grafik terbuka ke bawah seperti lintasan bola!</p>
       </Panel>
 
       <Panel tone="biru" ikon="🧩" title={`Tugas: Kartu ${s.kartu}`}>
@@ -65,10 +65,10 @@ export default function Layar10() {
           <Chip tone="biru">q = {fmt(q)} (layar 9)</Chip>
           <Chip tone="kuning">titik lepas (0 ; 2) → f(0) = 2</Chip>
         </div>
-        <p className="text-[14.5px]">
+        <p className="text-[17px]">
           Bentuk fungsinya: f(x) = a(x − {fmt(p)})² + {fmt(q)}. Gunakan f(0) = 2 untuk mencari a:
         </p>
-        <p className="text-[15px] font-extrabold text-[#17345A]">
+        <p className="text-[17px] font-extrabold text-[#17345A]">
           2 = a(0 − {fmt(p)})² + {fmt(q)} → a = ?
         </p>
         <div className="flex items-center gap-2.5 flex-wrap">
@@ -79,7 +79,7 @@ export default function Layar10() {
             status={s.aCari.a ? (aOk ? 'ok' : 'salah') : null}
             ariaLabel="Nilai a"
           />
-          <Tombol varian="navy" className="h-11 px-4 text-sm" onClick={cek}>Cek a</Tombol>
+          <Tombol varian="navy" className="h-11 px-4 text-[16px]" onClick={cek}>Cek a</Tombol>
         </div>
 
         {s.aCari.a && !aOk && aVal !== null && f0 !== null && (
@@ -96,7 +96,7 @@ export default function Layar10() {
         )}
 
         {s.aCari.coba >= 2 && !aOk && (
-          <div className="rounded-2xl bg-[#FFF8E2] ring-2 ring-[#F0E0A0] p-4 text-[#6B5508] text-[14px] font-semibold animate-fadein">
+          <div className="rounded-2xl bg-[#FFF8E2] ring-2 ring-[#F0E0A0] p-4 text-[#6B5508] text-[16px] font-semibold animate-fadein">
             <p className="font-extrabold flex items-center gap-2">⚠️ Cek tanda p!</p>
             <p className="mt-1.5 leading-relaxed">
               Bentuk kita <b>(x − {fmt(p)})</b> → puncak di x = <b>{fmt(p)}</b>. Kalau tertulis
@@ -109,7 +109,7 @@ export default function Layar10() {
 
       {aOk && aVal !== null && (
         <KotakHasil status="ok" judul={`Fungsi Lintasan Kartu ${s.kartu} ditemukan!`}>
-          <p className="text-[16px] font-black">f(x) = {fmt(aVal)}(x − {fmt(p)})² + {fmt(q)}</p>
+          <p className="text-[18px] font-black">f(x) = {fmt(aVal)}(x − {fmt(p)})² + {fmt(q)}</p>
           <p className="mt-1.5">
             Cek otomatis: f(0) = {fmt(aVal)} × {fmt(p)}² + {fmt(q)} = <b>2 ✓</b> — fungsi lewat titik lepas bola!
           </p>

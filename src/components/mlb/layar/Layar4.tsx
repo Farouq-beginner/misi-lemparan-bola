@@ -15,7 +15,7 @@ export default function Layar4() {
       <JudulLayar fase={3} judul="Dugaan Pertama" sub="Analis hebat selalu menulis dugaan sebelum menghitung." />
 
       <Panel ikon="🗣️" title="Lengkapi Kalimat Dugaanmu">
-        <p className="text-lg font-extrabold text-[#17345A] leading-relaxed">
+        <p className="text-xl font-extrabold text-[#17345A] leading-relaxed">
           “Aku menduga lemparan{' '}
           <span className={d.lemparan ? 'text-[#B45309]' : 'text-slate-300'}>{d.lemparan || '…'}</span>{' '}
           masuk ring, karena …”

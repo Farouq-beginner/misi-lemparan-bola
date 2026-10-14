@@ -107,7 +107,7 @@ export default function Layar11() {
       <JudulLayar fase={6} judul="Hitung f(5) dan Ambil Keputusan" sub="Empat langkah berurutan — analis tidak boleh melompat!" />
 
       <Panel tone="navy" ikon="⚖️" title="Aturan Keputusan Pelatih">
-        <p className="text-[14.5px]">
+        <p className="text-[17px]">
           Bola <b>MASUK</b> bila tingginya tepat di ring saat x = 5:
           <b> {fmt(ZONA.bawah)} m ≤ f(5) ≤ {fmt(ZONA.atas)} m</b> (ring 3 m ± 10 cm).
         </p>
@@ -120,10 +120,10 @@ export default function Layar11() {
           return (
             <div key={i} className={cn('rounded-2xl p-3.5 ring-2 transition-all', ok ? 'ring-[#2E9E6B] bg-[#EAF7F0]' : aktif ? 'ring-slate-200 bg-white' : 'ring-slate-100 bg-slate-50 opacity-60')}>
               <div className="flex items-center gap-2.5 flex-wrap">
-                <span className={cn('size-8 shrink-0 rounded-xl grid place-items-center font-black text-white text-sm', ok ? 'bg-[#2E9E6B]' : 'bg-[#17345A]')}>
+                <span className={cn('size-8 shrink-0 rounded-xl grid place-items-center font-black text-white text-[16px]', ok ? 'bg-[#2E9E6B]' : 'bg-[#17345A]')}>
                   {ok ? '✓' : i + 1}
                 </span>
-                <span className="font-extrabold text-[#17345A] text-[14.5px] flex-1 min-w-[140px]">{labelLangkah[i]}</span>
+                <span className="font-extrabold text-[#17345A] text-[17px] flex-1 min-w-[140px]">{labelLangkah[i]}</span>
                 <IsiAngka
                   value={s.f5.s[i]}
                   onChange={v => upd(d => { d.f5.s[i] = v })}
@@ -131,7 +131,7 @@ export default function Layar11() {
                   status={s.f5.s[i] ? (ok ? 'ok' : 'salah') : null}
                   ariaLabel={`Langkah ${i + 1}`}
                 />
-                <Tombol varian="navy" className="h-11 px-4 text-sm" disabled={!aktif || ok} onClick={() => cekLangkah(i)}>
+                <Tombol varian="navy" className="h-11 px-4 text-[16px]" disabled={!aktif || ok} onClick={() => cekLangkah(i)}>
                   Cek
                 </Tombol>
               </div>
@@ -147,7 +147,7 @@ export default function Layar11() {
 
       {f5Selesai && (
         <Panel tone="oranye" ikon="⚖️" title={`Keputusan untuk Kartu ${s.kartu}`}>
-          <p className="text-[14.5px]">
+          <p className="text-[17px]">
             f(5) = <b>{s.f5.s[3]}</b> m. Sesuai aturan ({fmt(ZONA.bawah)} – {fmt(ZONA.atas)} m), lemparan ini…
           </p>
           <PilihKapsul
@@ -191,12 +191,12 @@ export default function Layar11() {
               return (
                 <div key={k} className={cn('rounded-2xl p-3.5 ring-2 space-y-2.5', sendiri ? 'ring-[#F8D2AF] bg-[#FFF3E8]' : 'ring-slate-200 bg-white')}>
                   <div className="flex items-center gap-2 flex-wrap">
-                    <span className="size-8 rounded-xl bg-[#17345A] text-white font-black grid place-items-center text-sm">{k}</span>
+                    <span className="size-8 rounded-xl bg-[#17345A] text-white font-black grid place-items-center text-[16px]">{k}</span>
                     <Chip tone="abu">a = {fmt(c.a)} · p = {fmt(c.peak.x)} · q = {fmt(c.peak.y)}</Chip>
                     {sendiri && <Chip tone="oranye">kartumu</Chip>}
                   </div>
                   <div className="flex items-center gap-2 flex-wrap">
-                    <span className="font-extrabold text-[#17345A] text-sm">f(5) =</span>
+                    <span className="font-extrabold text-[#17345A] text-[16px]">f(5) =</span>
                     <IsiAngka value={f5Nilai} onChange={val => upd(d => { d.cek3[k].f5 = val })} className="w-20" ariaLabel={`f5 kartu ${k}`} />
                     <PilihKapsul
                       value={kepNilai}
@@ -206,10 +206,10 @@ export default function Layar11() {
                         { v: 'tidak', label: '❌ Tidak' },
                       ]}
                     />
-                    <Tombol varian="navy" className="h-11 px-4 text-sm" onClick={() => cekBaris(k)}>Cek</Tombol>
+                    <Tombol varian="navy" className="h-11 px-4 text-[16px]" onClick={() => cekBaris(k)}>Cek</Tombol>
                   </div>
                   {r.dicek && (
-                    <p className={cn('text-[13.5px] font-extrabold', benar ? 'text-[#1F7A4D]' : 'text-[#B03044]')}>
+                    <p className={cn('text-[15px] font-extrabold', benar ? 'text-[#1F7A4D]' : 'text-[#B03044]')}>
                       {benar ? '✓ ' : '✗ '}f(5) = {fmt(c.f5)} m — {c.selisih} → {c.masuk ? 'MASUK' : 'TIDAK MASUK'}
                     </p>
                   )}

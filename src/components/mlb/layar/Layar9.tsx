@@ -71,7 +71,7 @@ export default function Layar9() {
       <JudulLayar fase={5} judul="Sumbu Simetri → Puncak" sub="Tiga langkah menemukan puncak tanpa rumus rumit." />
 
       <Panel tone="biru" ikon="📏" title="3 Langkah Menemukan Puncak">
-        <ol className="list-decimal ml-5 space-y-1.5 text-[14.5px]">
+        <ol className="list-decimal ml-5 space-y-1.5 text-[17px]">
           <li>Cari <b>dua titik yang tingginya sama</b> di kartu datamu.</li>
           <li>Sumbu simetri: <b>x = (x₁ + x₂) : 2</b> — tepat di tengah keduanya.</li>
           <li>Puncak: <b>p</b> = sumbu simetri, <b>q</b> = tinggi titik pada sumbu simetri (titik tertinggi).</li>
@@ -79,10 +79,10 @@ export default function Layar9() {
       </Panel>
 
       <Panel tone="oranye" ikon="🎓" title="Contoh Terbimbing (bukan kartumu)">
-        <p className="text-[14px]">
+        <p className="text-[16px]">
           Kartu latihan punya titik <b>(1 ; 2,75)</b> dan <b>(3 ; 2,75)</b> — tingginya sama!
         </p>
-        <p className="text-[14px]">
+        <p className="text-[16px]">
           Sumbu simetri: x = (1 + 3) : 2 = <b>2</b> → titik di x = 2 adalah (2 ; 3) → puncak <b>(2 ; 3)</b>.
         </p>
         <div className="rounded-2xl bg-white ring-1 ring-[#F8D2AF] p-2">
@@ -91,7 +91,7 @@ export default function Layar9() {
       </Panel>
 
       <Panel ikon="🃏" title={`Kerjakan Kartu ${s.kartu}`}>
-        <p className="text-[13.5px] text-slate-500 font-semibold">1️⃣ Ketuk <b>dua titik</b> yang tingginya sama:</p>
+        <p className="text-[15px] text-slate-500 font-semibold">1️⃣ Ketuk <b>dua titik</b> yang tingginya sama:</p>
         <div className="flex flex-wrap gap-2" role="group" aria-label="Pilih dua titik setinggi">
           {kartu.points.map((p, i) => {
             const aktif = duo.includes(i)
@@ -102,7 +102,7 @@ export default function Layar9() {
                 aria-pressed={aktif}
                 onClick={() => pilih(i)}
                 className={cn(
-                  'rounded-2xl px-3.5 h-11 font-extrabold text-sm border-2 transition-all active:scale-95',
+                  'rounded-2xl px-3.5 h-11 font-extrabold text-[16px] border-2 transition-all active:scale-95',
                   aktif
                     ? 'bg-[#F97316] border-[#EA580C] text-white shadow-md'
                     : 'bg-white border-slate-200 text-[#17345A] hover:border-orange-300',
@@ -132,7 +132,7 @@ export default function Layar9() {
               status={s.simetri.sumbu ? (sumbuOk ? 'ok' : 'salah') : null}
               ariaLabel="Sumbu simetri"
             />
-            <Tombol varian="navy" className="h-11 px-4 text-sm" disabled={!setinggi} onClick={cekSumbu}>Cek</Tombol>
+            <Tombol varian="navy" className="h-11 px-4 text-[16px]" disabled={!setinggi} onClick={cekSumbu}>Cek</Tombol>
             {sumbuOk && <Chip tone="hijau">✓ x = {fmt(kartu.simX)}</Chip>}
           </div>
           {s.simetri.coba.sumbu >= 2 && !sumbuOk && (
@@ -150,7 +150,7 @@ export default function Layar9() {
               status={s.simetri.q ? (qOk ? 'ok' : 'salah') : null}
               ariaLabel="Tinggi puncak q"
             />
-            <Tombol varian="navy" className="h-11 px-4 text-sm" disabled={!sumbuOk} onClick={cekQ}>Cek</Tombol>
+            <Tombol varian="navy" className="h-11 px-4 text-[16px]" disabled={!sumbuOk} onClick={cekQ}>Cek</Tombol>
           </div>
           {s.simetri.coba.q >= 2 && !qOk && (
             <Petunjuk>

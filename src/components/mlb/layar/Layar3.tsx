@@ -30,7 +30,7 @@ export default function Layar3() {
           Pelatih Rimba bingung: <b>hanya 1 dari 3 lemparan bebas yang masuk ring</b>.
           Sebagai analis data, tugasmu:
         </p>
-        <ol className="list-decimal ml-5 space-y-1.5 text-[14.5px]">
+        <ol className="list-decimal ml-5 space-y-1.5 text-[17px]">
           <li>Menemukan <b>fungsi lintasan</b> tiap lemparan dari data titiknya.</li>
           <li>Menghitung <b>tinggi bola saat x = 5</b> (tepat di ring).</li>
           <li><b>Memutuskan</b> lemparan mana yang masuk — dan menjelaskan sebabnya.</li>
@@ -38,7 +38,7 @@ export default function Layar3() {
       </Panel>
 
       <Panel tone="biru" ikon="📐" title="Aturan Koordinat">
-        <ul className="space-y-2 text-[14.5px]">
+        <ul className="space-y-2 text-[17px]">
           <li>🧭 <b>Sumbu x</b> = jarak mendatar dari pemain (meter).</li>
           <li>📏 <b>Sumbu y</b> = tinggi bola dari lantai (meter).</li>
           <li>🖐️ Titik <b>(0 ; 2)</b> = bola lepas dari tangan setinggi 2 m.</li>
@@ -48,7 +48,7 @@ export default function Layar3() {
       </Panel>
 
       <Panel tone="oranye" ikon="📋" title="4 Aturan Kerja Analis">
-        <ol className="list-decimal ml-5 space-y-1.5 text-[14.5px]">
+        <ol className="list-decimal ml-5 space-y-1.5 text-[17px]">
           <li>Kerjakan layar secara <b>berurutan</b> — tiap layar membantu layar berikutnya.</li>
           <li><b>Tebak dulu, baru lihat.</b> Salah itu bagian dari misi, bukan aib!</li>
           <li>Koma dan titik desimal sama saja: <b>3,8 = 3.8</b>.</li>
@@ -57,7 +57,7 @@ export default function Layar3() {
       </Panel>
 
       <Panel ikon="🃏" title="Pilih Kartu Datamu">
-        <p className="text-[14.5px]">
+        <p className="text-[17px]">
           Setiap analis mendapat <b>satu kartu data</b> hasil pelacakan satu lemparan.
           Pilih satu — kamu akan menganalisis kartu ini sampai tuntas!
         </p>

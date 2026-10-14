@@ -70,7 +70,7 @@ export default function Layar12() {
             </TableBody>
           </Table>
         </div>
-        <p className="text-[12px] text-slate-400 font-bold">
+        <p className="text-[13.5px] text-slate-400 font-bold">
           a, p, q dari data tim analis · f(5) dan keputusan dari hitunganmu di Layar 11.
         </p>
         {adaBaris < 3 && (
@@ -89,7 +89,7 @@ export default function Layar12() {
       )}
 
       <Panel tone="oranye" ikon="🤝" title="Pertanyaan Pembanding">
-        <p className="text-[14.5px]">
+        <p className="text-[17px]">
           Semua bola lepas dari titik yang sama <b>(0 ; 2)</b>. Mengapa hanya lemparan <b>A</b> yang masuk?
           Bandingkan <b>f(5)</b> tiap kartu dengan tinggi ring 3 m dan tulis kesimpulanmu.
         </p>
@@ -100,7 +100,7 @@ export default function Layar12() {
           placeholder="Contoh: f(5) A = 3 pas dengan ring, B hanya 0,5 m karena puncaknya rendah, C 3,5 m karena puncaknya terlalu maju/tinggi…"
           ariaLabel="Jawaban pertanyaan pembanding"
         />
-        <p className={cn('text-[11.5px] font-bold', s.rekapTulis.trim() ? 'text-[#1F7A4D]' : 'text-slate-400')}>
+        <p className={cn('text-[13px] font-bold', s.rekapTulis.trim() ? 'text-[#1F7A4D]' : 'text-slate-400')}>
           {s.rekapTulis.trim() ? '✓ tersimpan' : 'jawaban terbuka — tidak dinilai'}
         </p>
       </Panel>

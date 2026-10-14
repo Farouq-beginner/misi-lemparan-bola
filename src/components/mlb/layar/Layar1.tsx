@@ -42,7 +42,7 @@ export default function Layar1() {
       <JudulLayar judul="Peta Alur Misi" sub="Tujuan pembelajaran dan 7 fase + Penutup. Ketuk kotak untuk melompat." />
 
       <Panel tone="navy" ikon="🎓" title="🎯 Tujuan Pembelajaran">
-        <ul className="space-y-2.5 text-[14.5px]">
+        <ul className="space-y-2.5 text-[17px]">
           <li className="flex gap-2 items-start">
             <Chip tone="oranye" className="mt-0.5 shrink-0">TP-1</Chip>
             <span>Menentukan <b>puncak dan arah buka</b> grafik fungsi kuadrat berbentuk f(x) = a(x − p)² + q.</span>
@@ -66,8 +66,8 @@ export default function Layar1() {
               className="text-left rounded-3xl bg-white ring-1 ring-slate-200 p-4 shadow-xl shadow-black/10 hover:-translate-y-0.5 hover:shadow-2xl transition-all active:scale-95"
             >
               <div className="flex items-center gap-2">
-                <span className="size-8 rounded-xl bg-gradient-to-b from-[#FB923C] to-[#F97316] text-white font-black grid place-items-center text-sm">{f.n}</span>
-                <span className="text-2xl" aria-hidden>{f.emoji}</span>
+                <span className="size-8 rounded-xl bg-gradient-to-b from-[#FB923C] to-[#F97316] text-white font-black grid place-items-center text-[16px]">{f.n}</span>
+                <span className="text-3xl" aria-hidden>{f.emoji}</span>
                 <span className="ml-auto">
                   {done ? (
                     <Chip tone="hijau">✓ selesai</Chip>
@@ -78,9 +78,9 @@ export default function Layar1() {
                   )}
                 </span>
               </div>
-              <p className="font-extrabold text-[#17345A] mt-2.5 leading-tight text-[15px]">{f.nama}</p>
-              <p className="text-xs text-slate-500 font-semibold mt-1 leading-snug">{f.desc}</p>
-              <p className="text-[11px] text-slate-400 font-bold mt-1.5">Layar {f.dari + 1}–{f.sampai + 1}</p>
+              <p className="font-extrabold text-[#17345A] mt-2.5 leading-tight text-[17px]">{f.nama}</p>
+              <p className="text-[13.5px] text-slate-500 font-semibold mt-1 leading-snug">{f.desc}</p>
+              <p className="text-[12.5px] text-slate-400 font-bold mt-1.5">Layar {f.dari + 1}–{f.sampai + 1}</p>
             </button>
           )
         })}
@@ -90,10 +90,10 @@ export default function Layar1() {
         onClick={() => goto(LAYAR_PENUTUP)}
         className="w-full text-left rounded-3xl bg-white ring-1 ring-slate-200 p-4 shadow-xl shadow-black/10 hover:-translate-y-0.5 transition-all active:scale-[0.98] flex items-center gap-3"
       >
-        <span className="text-3xl" aria-hidden>🏁</span>
+        <span className="text-4xl" aria-hidden>🏁</span>
         <span className="flex-1 min-w-0">
           <span className="block font-extrabold text-[#17345A]">Penutup</span>
-          <span className="block text-xs text-slate-500 font-semibold">3 kesimpulan + pertanyaan transfer · Layar 16</span>
+          <span className="block text-[13.5px] text-slate-500 font-semibold">3 kesimpulan + pertanyaan transfer · Layar 16</span>
         </span>
         <span>
           {s.progres.includes(LAYAR_PENUTUP) ? <Chip tone="hijau">✓ selesai</Chip> : <Chip tone="abu">belum</Chip>}
@@ -106,7 +106,7 @@ export default function Layar1() {
           {konfirm ? 'Yakin? Klik sekali lagi!' : '🔄 Ulangi Misi'}
         </Tombol>
       </div>
-      <p className="text-center text-white/45 text-xs font-semibold">
+      <p className="text-center text-white/45 text-[13.5px] font-semibold">
         Progres: {s.progres.length}/16 layar dikunjungi · tersimpan otomatis di perangkat ini
       </p>
     </div>

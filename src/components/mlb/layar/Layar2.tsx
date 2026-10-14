@@ -39,7 +39,7 @@ export default function Layar2() {
               aria-pressed={sorot === k}
               onClick={() => setSorot(sorot === k ? null : k)}
               className={cn(
-                'flex-1 h-10 rounded-2xl font-extrabold text-sm border-2 transition-all active:scale-95',
+                'flex-1 h-10 rounded-2xl font-extrabold text-[16px] border-2 transition-all active:scale-95',
                 sorot === k
                   ? 'bg-[#F97316] border-[#EA580C] text-white shadow-md'
                   : 'bg-white border-slate-200 text-[#17345A] hover:border-orange-300',
@@ -49,7 +49,7 @@ export default function Layar2() {
             </button>
           ))}
         </div>
-        <p className="text-[11.5px] text-slate-400 font-bold px-1 pt-1.5">
+        <p className="text-[13px] text-slate-400 font-bold px-1 pt-1.5">
           💡 Ketuk lintasan di gambar atau tombol di atas untuk menyorot satu lemparan.
         </p>
       </div>
@@ -75,7 +75,7 @@ export default function Layar2() {
             />
           </div>
         </div>
-        <p className="text-[11.5px] text-slate-400 font-bold">✓ Jawaban terbuka — tidak dinilai, tersimpan otomatis.</p>
+        <p className="text-[13px] text-slate-400 font-bold">✓ Jawaban terbuka — tidak dinilai, tersimpan otomatis.</p>
       </Panel>
     </div>
   )

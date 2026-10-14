@@ -59,14 +59,14 @@ export default function Layar8() {
       <JudulLayar fase={5} judul="Plot dan Amati" sub={`Ketuk lokasi titik data Kartu ${s.kartu} di bidang koordinat.`} />
 
       <Panel ikon="🃏" title={`Tabel Titik — Kartu ${s.kartu}`}>
-        <p className="text-[14px]">
+        <p className="text-[16px]">
           Hasil pelacakan bola <b>Kartu {s.kartu}</b> (dalam meter). Plot kelima titik ini ke grid!
         </p>
         <div className="flex flex-wrap gap-2">
           {kartu.points.map(p => {
             const ada = terplot.includes(p.x)
             return (
-              <Chip key={p.x} tone={ada ? 'hijau' : 'abu'} className="text-[13px] px-3 py-1.5">
+              <Chip key={p.x} tone={ada ? 'hijau' : 'abu'} className="text-[14.5px] px-3 py-1.5">
                 {ada ? '✓' : '○'} ({p.x} ; {fmt(p.y)})
               </Chip>
             )
@@ -80,7 +80,7 @@ export default function Layar8() {
 
       <div className="rounded-3xl bg-white ring-1 ring-slate-200 shadow-xl shadow-black/10 p-3">
         <GridTap points={kartu.points} terplot={terplot} onTap={tap} flash={flash} warna={kartu.color} />
-        <p className="text-[11.5px] text-slate-400 font-bold px-1 pt-1.5">
+        <p className="text-[13px] text-slate-400 font-bold px-1 pt-1.5">
           💡 Ketuk kolom x yang benar — titik otomatis muncul di tinggi y yang tercatat.
         </p>
       </div>

@@ -17,7 +17,7 @@ export default function Layar7() {
       <JudulLayar fase={4} judul="Kesimpulan Konsep" sub="Dari tiga grafik tadi, kamu pasti sudah menangkap polanya. Tulis dulu dengan bahasamu sendiri!" />
 
       <Panel tone="navy" ikon="🧠" title="Rangkai Kesimpulanmu">
-        <p className="text-[14.5px]">
+        <p className="text-[17px]">
           Perhatikan ketiga grafik tadi: <b>(x − 3)²</b>, <b>(x − 3)² + 4</b>, <b>−(x − 3)² + 4</b>.
           Apa efek angka di dalam kurung? Angka di luar? Tanda di depan?
         </p>
@@ -38,7 +38,7 @@ export default function Layar7() {
           >
             {s.penguat ? '✓ Kartu terbuka' : '🔓 Buka Kartu Penguat'}
           </Tombol>
-          {!cukup && !s.penguat && <span className="text-xs font-bold text-slate-400">tulis minimal 10 huruf dulu</span>}
+          {!cukup && !s.penguat && <span className="text-[13.5px] font-bold text-slate-400">tulis minimal 10 huruf dulu</span>}
         </div>
       </Panel>
 
@@ -47,7 +47,7 @@ export default function Layar7() {
           <div className="rounded-2xl bg-white ring-1 ring-[#BCE3CC] p-2">
             <AnatomiParabola className="w-full h-auto" />
           </div>
-          <ul className="space-y-2 text-[14.5px]">
+          <ul className="space-y-2 text-[17px]">
             <li>🎯 Puncak grafik: <b>(p ; q)</b> — langsung terlihat dari bentuk a(x − p)² + q.</li>
             <li>➡️ Dari y = ax²: <b>p menggeser mendatar</b> (ke kanan bila p &gt; 0), <b>q menggeser vertikal</b> (ke atas bila q &gt; 0).</li>
             <li>↕️ <b>a &gt; 0</b> terbuka ke atas (bentuk senyum); <b>a &lt; 0</b> terbuka ke bawah — seperti lintasan bola!</li>
@@ -56,7 +56,7 @@ export default function Layar7() {
           </ul>
         </Panel>
       ) : (
-        <p className="text-center text-white/50 text-sm font-bold">🔒 Kartu penguat menunggu kesimpulanmu…</p>
+        <p className="text-center text-white/50 text-[16px] font-bold">🔒 Kartu penguat menunggu kesimpulanmu…</p>
       )}
     </div>
   )

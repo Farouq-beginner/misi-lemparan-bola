@@ -30,16 +30,16 @@ export default function Layar14() {
       <Panel tone="biru" ikon="🪞" title="Kartu Refleksi">
         <div className="space-y-3">
           <div>
-            <p className="font-extrabold text-[#17345A] text-[14.5px]">🎯 TP-1 — Aku bisa menentukan puncak dan arah buka dari f(x) = a(x − p)² + q</p>
+            <p className="font-extrabold text-[#17345A] text-[17px]">🎯 TP-1 — Aku bisa menentukan puncak dan arah buka dari f(x) = a(x − p)² + q</p>
             <Skala4 value={s.refleksi.tp1} onChange={v => upd(d => { d.refleksi.tp1 = v })} ariaLabel="Skala TP-1" />
-            <p className="text-[11.5px] font-bold text-slate-400">1 = belum bisa · 2 = dengan bantuan · 3 = bisa sendiri · 4 = bisa + bisa menjelaskan</p>
+            <p className="text-[13px] font-bold text-slate-400">1 = belum bisa · 2 = dengan bantuan · 3 = bisa sendiri · 4 = bisa + bisa menjelaskan</p>
           </div>
           <div>
-            <p className="font-extrabold text-[#17345A] text-[14.5px]">🏀 TP-2 — Aku bisa menghitung f(5) lalu memutuskan lemparan masuk/tidak</p>
+            <p className="font-extrabold text-[#17345A] text-[17px]">🏀 TP-2 — Aku bisa menghitung f(5) lalu memutuskan lemparan masuk/tidak</p>
             <Skala4 value={s.refleksi.tp2} onChange={v => upd(d => { d.refleksi.tp2 = v })} ariaLabel="Skala TP-2" />
           </div>
           <div>
-            <p className="font-extrabold text-[#17345A] text-[14.5px]">✍️ Hal paling berharga / yang masih membingungkan:</p>
+            <p className="font-extrabold text-[#17345A] text-[17px]">✍️ Hal paling berharga / yang masih membingungkan:</p>
             <IsiTeks
               value={s.refleksi.tulis}
               onChange={v => upd(d => { d.refleksi.tulis = v })}
@@ -49,7 +49,7 @@ export default function Layar14() {
             />
           </div>
           <div>
-            <p className="font-extrabold text-[#17345A] text-[14.5px]">🚀 Tindak lanjutku:</p>
+            <p className="font-extrabold text-[#17345A] text-[17px]">🚀 Tindak lanjutku:</p>
             <PilihKapsul
               value={s.refleksi.lanjut}
               onChange={v => upd(d => { d.refleksi.lanjut = v })}
@@ -72,12 +72,12 @@ export default function Layar14() {
             return (
               <div key={qi} className={cn('rounded-2xl p-4 ring-2 space-y-3', benar ? 'ring-[#B4E0C6] bg-[#EAF7F0]' : 'ring-slate-200 bg-white')}>
                 <div className="flex items-center gap-2 flex-wrap">
-                  <span className="size-8 rounded-xl bg-[#17345A] text-white font-black grid place-items-center text-sm">{qi + 1}</span>
+                  <span className="size-8 rounded-xl bg-[#17345A] text-white font-black grid place-items-center text-[16px]">{qi + 1}</span>
                   <Chip tone={soal.tp === 1 ? 'biru' : 'oranye'}>TP-{soal.tp}</Chip>
                   {benar && <Chip tone="hijau">✓ tepat</Chip>}
                   {!benar && coba >= 2 && <Chip tone="kuning">pembahasan terbuka</Chip>}
                 </div>
-                <p className="font-extrabold text-[#17345A] text-[15px] leading-snug">{soal.tanya}</p>
+                <p className="font-extrabold text-[#17345A] text-[17px] leading-snug">{soal.tanya}</p>
                 <div className="grid sm:grid-cols-2 gap-2" role="group" aria-label={`Opsi soal ${qi + 1}`}>
                   {soal.opsi.map((o, oi) => {
                     const dipilih = pilih === oi
@@ -90,7 +90,7 @@ export default function Layar14() {
                         aria-pressed={dipilih}
                         onClick={() => pilihOpsi(qi, oi)}
                         className={cn(
-                          'h-12 rounded-2xl font-extrabold text-[14px] border-2 transition-all active:scale-95 px-3 disabled:opacity-70',
+                          'h-12 rounded-2xl font-extrabold text-[16px] border-2 transition-all active:scale-95 px-3 disabled:opacity-70',
                           tampilBenar
                             ? 'bg-[#2E9E6B] border-[#248A5C] text-white shadow-md'
                             : dipilih

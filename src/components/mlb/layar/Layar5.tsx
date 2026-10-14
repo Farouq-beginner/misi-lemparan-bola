@@ -21,12 +21,12 @@ export default function Layar5() {
       <JudulLayar fase={3} judul="Tebak Dulu, Baru Lihat!" sub="Pelatih punya grafik tiga fungsi. Tebak dulu puncak dan arah bukanya — jangan mengintip!" />
 
       <Panel tone="navy" ikon="🕵️" title="Tiga Fungsi Hasil Uji Coba">
-        <p className="text-[14.5px]">Tim pelatih menguji tiga model lintasan di GeoGebra:</p>
+        <p className="text-[17px]">Tim pelatih menguji tiga model lintasan di GeoGebra:</p>
         <div className="grid sm:grid-cols-3 gap-2 text-center">
           {JEMBATAN.map((f, i) => (
             <div key={i} className="rounded-2xl bg-white/10 ring-1 ring-white/20 px-3 py-3">
-              <p className="text-[11px] font-black text-[#FDBA74] uppercase tracking-wide">Fungsi {i + 1}</p>
-              <p className="font-black text-lg mt-0.5">{f.fx}</p>
+              <p className="text-[12.5px] font-black text-[#FDBA74] uppercase tracking-wide">Fungsi {i + 1}</p>
+              <p className="font-black text-xl mt-0.5">{f.fx}</p>
             </div>
           ))}
         </div>
@@ -36,7 +36,7 @@ export default function Layar5() {
         const t = s.tebak[i]
         return (
           <Panel key={i} ikon="🃏" title={`Tebakan untuk Fungsi ${i + 1}: ${f.fx}`}>
-            <p className="text-[13.5px] text-slate-500 font-semibold">Di mana puncaknya, dan ke arah mana grafik terbuka?</p>
+            <p className="text-[15px] text-slate-500 font-semibold">Di mana puncaknya, dan ke arah mana grafik terbuka?</p>
             <div className="flex items-center gap-2.5 flex-wrap">
               <span className="font-extrabold text-[#17345A]">p =</span>
               <IsiAngka value={t.p} onChange={v => upd(d => { d.tebak[i].p = v })} ariaLabel={`Tebakan p fungsi ${i + 1}`} />

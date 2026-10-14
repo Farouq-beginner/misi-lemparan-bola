@@ -46,12 +46,12 @@ export function Panel({
       {title && (
         <div className="flex items-center gap-2 px-5 pt-4">
           {ikon && <span aria-hidden>{ikon}</span>}
-          <h3 className={cn('font-extrabold leading-snug text-[15.5px] sm:text-base', tone === 'navy' ? 'text-white' : 'text-[#17345A]')}>
+          <h3 className={cn('font-extrabold leading-snug text-[18px] sm:text-[19px]', tone === 'navy' ? 'text-white' : 'text-[#17345A]')}>
             {title}
           </h3>
         </div>
       )}
-      <CardContent className={cn('p-5 pt-3 space-y-3 text-[15px] sm:text-base font-semibold leading-relaxed', tone === 'navy' ? 'text-white/90' : 'text-[#2A4166]')}>
+      <CardContent className={cn('p-5 pt-3 space-y-3 text-[17px] sm:text-[18px] font-semibold leading-relaxed', tone === 'navy' ? 'text-white/90' : 'text-[#2A4166]')}>
         {children}
       </CardContent>
     </Card>
@@ -62,7 +62,7 @@ export function Panel({
 export function BadgeFase({ n }: { n: number }) {
   return (
     <span
-      className="shrink-0 size-10 rounded-2xl bg-gradient-to-b from-[#FB923C] to-[#F97316] text-white font-black grid place-items-center shadow-lg shadow-orange-950/40 text-lg"
+      className="shrink-0 size-10 rounded-2xl bg-gradient-to-b from-[#FB923C] to-[#F97316] text-white font-black grid place-items-center shadow-lg shadow-orange-950/40 text-xl"
       aria-label={`Fase ${n}`}
     >
       {n}
@@ -75,8 +75,8 @@ export function JudulLayar({ judul, sub, fase }: { judul: string; sub?: string; 
     <div className="flex items-start gap-3">
       {fase ? <BadgeFase n={fase} /> : null}
       <div className="min-w-0">
-        <h1 className="text-xl sm:text-2xl font-black text-white leading-tight drop-shadow">{judul}</h1>
-        {sub && <p className="text-white/70 text-[13.5px] sm:text-[15px] font-semibold mt-1">{sub}</p>}
+        <h1 className="text-2xl sm:text-3xl font-black text-white leading-tight drop-shadow">{judul}</h1>
+        {sub && <p className="text-white/70 text-[15px] sm:text-[17px] font-semibold mt-1">{sub}</p>}
       </div>
     </div>
   )
@@ -98,7 +98,7 @@ export function Tombol({ varian = 'primer', className, ...props }: React.Compone
     <button
       {...props}
       className={cn(
-        'inline-flex items-center justify-center gap-2 rounded-full font-extrabold px-5 h-12 text-[15px] transition-all active:scale-95 disabled:opacity-45 disabled:pointer-events-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#FDBA74]',
+        'inline-flex items-center justify-center gap-2 rounded-full font-extrabold px-5 h-12 text-[17px] transition-all active:scale-95 disabled:opacity-45 disabled:pointer-events-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#FDBA74]',
         varianCls[varian],
         className,
       )}
@@ -131,7 +131,7 @@ export function IsiAngka({
       disabled={disabled}
       aria-label={ariaLabel}
       inputMode="decimal"
-      className={cn('h-11 rounded-2xl border-2 border-slate-200 bg-white font-bold text-[#17345A] text-center text-lg w-24', ring, className)}
+      className={cn('h-11 rounded-2xl border-2 border-slate-200 bg-white font-bold text-[#17345A] text-center text-xl w-24', ring, className)}
     />
   )
 }
@@ -246,7 +246,7 @@ const chipCls: Record<ChipTone, string> = {
 }
 
 export function Chip({ tone = 'abu', children, className }: { tone?: ChipTone; children: React.ReactNode; className?: string }) {
-  return <span className={cn('inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-bold ring-1', chipCls[tone], className)}>{children}</span>
+  return <span className={cn('inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[13.5px] font-bold ring-1', chipCls[tone], className)}>{children}</span>
 }
 
 // ---------- Kotak hasil cek ----------
@@ -260,7 +260,7 @@ export function KotakHasil({ status, judul, children }: { status: 'ok' | 'salah'
   return (
     <div className={cn('rounded-2xl ring-2 p-4 animate-pop', map[status])} role="status">
       {judul && <p className="font-extrabold flex items-center gap-2">{ikon} {judul}</p>}
-      {children && <div className={cn('text-[14.5px] font-semibold leading-relaxed', judul && 'mt-1.5')}>{children}</div>}
+      {children && <div className={cn('text-[17px] font-semibold leading-relaxed', judul && 'mt-1.5')}>{children}</div>}
     </div>
   )
 }
@@ -268,7 +268,7 @@ export function KotakHasil({ status, judul, children }: { status: 'ok' | 'salah'
 // ---------- Petunjuk (setelah 2 kesempatan) ----------
 export function Petunjuk({ children }: { children: React.ReactNode }) {
   return (
-    <div className="rounded-2xl bg-[#FFF8DC] ring-2 ring-[#EFDFA0] p-3.5 text-[#6B5508] text-[14px] font-semibold flex gap-2.5 animate-fadein">
+    <div className="rounded-2xl bg-[#FFF8DC] ring-2 ring-[#EFDFA0] p-3.5 text-[#6B5508] text-[16px] font-semibold flex gap-2.5 animate-fadein">
       <Lightbulb className="size-5 shrink-0 text-[#D19A00] mt-0.5" aria-hidden />
       <div className="leading-relaxed">{children}</div>
     </div>
@@ -280,7 +280,7 @@ export function Terkunci({ pesan, children }: { pesan: string; children?: React.
   return (
     <div className="rounded-2xl bg-slate-100 ring-2 ring-slate-200 p-4 text-slate-500 flex items-start gap-3">
       <Lock className="size-5 shrink-0 mt-0.5" aria-hidden />
-      <div className="font-semibold text-[14px] leading-relaxed">
+      <div className="font-semibold text-[16px] leading-relaxed">
         <p>{pesan}</p>
         {children}
       </div>
@@ -307,7 +307,7 @@ export function PilihKapsul({
           aria-pressed={value === o.v}
           onClick={() => onChange(o.v)}
           className={cn(
-            'h-11 px-4 rounded-2xl font-extrabold text-sm border-2 transition-all active:scale-95 disabled:opacity-50',
+            'h-11 px-4 rounded-2xl font-extrabold text-[16px] border-2 transition-all active:scale-95 disabled:opacity-50',
             value === o.v
               ? 'bg-[#F97316] border-[#EA580C] text-white shadow-md'
               : 'bg-white border-slate-200 text-[#17345A] hover:border-orange-300',
@@ -330,7 +330,7 @@ export function BarisCek({ label, teks, benar }: { label: string; teks: string; 
       >
         {benar === null ? '?' : benar ? <Check className="size-4" /> : <X className="size-4" />}
       </span>
-      <div className="min-w-0 text-[14px] leading-snug">
+      <div className="min-w-0 text-[16px] leading-snug">
         <span className="font-extrabold text-[#17345A]">{label}: </span>
         <span className="font-semibold text-[#2A4166]">{teks}</span>
       </div>
@@ -363,9 +363,9 @@ export function PilihanKartu({ value, onChange, kecil }: { value: '' | CardId; o
                 : 'border-slate-200 bg-white text-[#17345A] hover:border-orange-300',
             )}
           >
-            <span className="block text-2xl leading-none mb-1" aria-hidden>{meta[k].emoji}</span>
-            <span className="block text-lg" style={{ color: meta[k].warna }}>Kartu {k}</span>
-            {!kecil && <span className="block text-[11px] font-bold text-slate-400 mt-0.5">5 titik data</span>}
+            <span className="block text-3xl leading-none mb-1" aria-hidden>{meta[k].emoji}</span>
+            <span className="block text-xl" style={{ color: meta[k].warna }}>Kartu {k}</span>
+            {!kecil && <span className="block text-[12.5px] font-bold text-slate-400 mt-0.5">5 titik data</span>}
           </button>
         )
       })}
@@ -386,7 +386,7 @@ export function Skala4({ value, onChange, ariaLabel }: { value: number; onChange
           title={`${n} · ${ket[n]}`}
           onClick={() => onChange(n)}
           className={cn(
-            'h-10 flex-1 rounded-xl font-black border-2 transition-all active:scale-90 text-[15px]',
+            'h-10 flex-1 rounded-xl font-black border-2 transition-all active:scale-90 text-[17px]',
             value >= n
               ? 'bg-gradient-to-b from-[#FB923C] to-[#F97316] border-[#EA580C] text-white shadow'
               : 'bg-white border-slate-200 text-slate-400 hover:border-orange-300',
@@ -408,7 +408,7 @@ export function GGBButton({ g, label = 'Buka di GeoGebra' }: { g: 'G1' | 'G2' | 
       href={url}
       target="_blank"
       rel="noopener noreferrer"
-      className="inline-flex items-center justify-center gap-2 rounded-full bg-[#17345A] text-white font-extrabold px-4 h-11 hover:bg-[#1E4372] transition-colors shadow-md text-sm"
+      className="inline-flex items-center justify-center gap-2 rounded-full bg-[#17345A] text-white font-extrabold px-4 h-11 hover:bg-[#1E4372] transition-colors shadow-md text-[16px]"
     >
       <ExternalLink className="size-4" aria-hidden />
       {label}
