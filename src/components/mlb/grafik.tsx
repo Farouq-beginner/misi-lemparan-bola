@@ -177,15 +177,16 @@ export function AnatomiParabola({ className }: { className?: string }) {
       <path d="M 60,205 Q 190,15 320,205" fill="none" stroke="#F97316" strokeWidth="5" strokeLinecap="round" />
       {/* sumbu simetri */}
       <line x1="190" y1="112" x2="190" y2="205" stroke="#8A94A6" strokeWidth="2" strokeDasharray="6 5" />
-      <text x="197" y="199" fontSize="12" fontWeight="700" fill="#6B7A90">x = p (sumbu simetri)</text>
+      <text x="190" y="199" fontSize="12" fontWeight="700" fill="#6B7A90" textAnchor="middle">x = p (sumbu simetri)</text>
       {/* puncak */}
       <circle cx="190" cy="112" r="8" fill="#F97316" stroke="#7C2D12" strokeWidth="2" />
       <text x="190" y="94" fontSize="13.5" fontWeight="900" fill="#17345A" textAnchor="middle">puncak (p ; q)</text>
       {/* arah buka */}
       <text x="54" y="188" fontSize="22" fill="#F97316" fontWeight="900">↘</text>
       <text x="306" y="188" fontSize="22" fill="#F97316" fontWeight="900">↙</text>
-      <text x="300" y="34" fontSize="12.5" fontWeight="800" fill="#B45309" textAnchor="end">terbuka ke bawah bila a &lt; 0</text>
-      <text x="80" y="34" fontSize="12.5" fontWeight="800" fill="#1F7A4D" textAnchor="start">ke atas bila a &gt; 0</text>
+      {/* keterangan arah buka — diberi jarak kiri/kanan agar tidak tumpang tindih */}
+      <text x="34" y="18" fontSize="12" fontWeight="800" fill="#1F7A4D" textAnchor="start">ke atas bila a &gt; 0</text>
+      <text x="346" y="18" fontSize="12" fontWeight="800" fill="#B45309" textAnchor="end">terbuka ke bawah bila a &lt; 0</text>
     </svg>
   )
 }
