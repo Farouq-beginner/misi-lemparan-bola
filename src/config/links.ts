@@ -15,4 +15,4 @@ export const GEOGEBRA = {
 export type GeoGebraKey = keyof typeof GEOGEBRA
 
 /** Nama penyusun yang tampil di sampul */
-export const PENYUSUN = 'Kuro Niku02'
+export const PENYUSUN = 'Salma Hamidah Sya\'diyah'

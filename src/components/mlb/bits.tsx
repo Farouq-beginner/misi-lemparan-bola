@@ -5,8 +5,8 @@
 // Tema: biru tua (dasar) + oranye bola basket (aksen)
 // ============================================================
 
-import React from 'react'
-import { Check, X, Lock, Lightbulb, ExternalLink } from 'lucide-react'
+import React, { useEffect, useState } from 'react'
+import { Check, X, Lock, Lightbulb, ExternalLink, Maximize, Minimize } from 'lucide-react'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Card, CardContent } from '@/components/ui/card'
@@ -153,8 +153,81 @@ export function IsiTeks({
       rows={rows}
       placeholder={placeholder}
       aria-label={ariaLabel}
-      className={cn('rounded-2xl border-2 border-slate-200 bg-white font-semibold text-[#17345A] resize-y min-h-[72px] leading-relaxed', className)}
+      className={cn('rounded-2xl border-2 border-slate-200 bg-white font-semibold text-[#17345A] text-[17px] resize-y min-h-[76px] leading-relaxed', className)}
     />
+  )
+}
+
+// ---------- Layar penuh (proyektor / papan tulis digital) ----------
+type DocFullscreen = Document & {
+  webkitFullscreenElement?: Element | null
+  webkitExitFullscreen?: () => Promise<void> | void
+}
+type ElFullscreen = HTMLElement & {
+  webkitRequestFullscreen?: () => Promise<void> | void
+}
+
+/** Elemen yang sedang tampil layar penuh (lintas peramban). */
+function elemenLayarPenuh(): Element | null {
+  const d = document as DocFullscreen
+  return d.fullscreenElement ?? d.webkitFullscreenElement ?? null
+}
+
+/** Masuk / keluar layar penuh — dipakai tombol, pintasan F, dsb. */
+export function toggleLayarPenuhFS() {
+  try {
+    const d = document as DocFullscreen
+    if (!elemenLayarPenuh()) {
+      const el = document.documentElement as ElFullscreen
+      void (el.requestFullscreen?.bind(el) ?? el.webkitRequestFullscreen?.bind(el))?.()
+    } else {
+      void (d.exitFullscreen?.bind(d) ?? d.webkitExitFullscreen?.bind(d))?.()
+    }
+  } catch { /* sebagian peramban/penyematan menolak — abaikan */ }
+}
+
+export function TombolLayarPenuh({
+  className, denganLabel = false, varian = 'lembut',
+}: {
+  className?: string
+  denganLabel?: boolean
+  varian?: 'lembut' | 'putih'
+}) {
+  const [penuh, setPenuh] = useState(false)
+
+  useEffect(() => {
+    const ubah = () => setPenuh(Boolean(elemenLayarPenuh()))
+    ubah()
+    document.addEventListener('fullscreenchange', ubah)
+    document.addEventListener('webkitfullscreenchange', ubah)
+    return () => {
+      document.removeEventListener('fullscreenchange', ubah)
+      document.removeEventListener('webkitfullscreenchange', ubah)
+    }
+  }, [])
+
+  const toggle = () => toggleLayarPenuhFS()
+
+  const Ikon = penuh ? Minimize : Maximize
+  return (
+    <button
+      type="button"
+      onClick={toggle}
+      aria-pressed={penuh}
+      aria-label={penuh ? 'Keluar dari layar penuh' : 'Tampilkan layar penuh'}
+      title={penuh ? 'Keluar layar penuh (F)' : 'Layar penuh (F)'}
+      className={cn(
+        'inline-flex items-center justify-center gap-2 rounded-full font-extrabold transition-all active:scale-95 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#FDBA74]',
+        varian === 'putih'
+          ? 'bg-white text-[#17345A] hover:bg-orange-50 shadow-md ring-1 ring-slate-200'
+          : 'bg-white/10 text-white ring-1 ring-white/25 hover:bg-white/20 backdrop-blur',
+        denganLabel ? 'h-11 px-4 text-[16px]' : 'size-11',
+        className,
+      )}
+    >
+      <Ikon className="size-5" aria-hidden />
+      {denganLabel && <span>{penuh ? 'Layar Normal' : 'Layar Penuh'}</span>}
+    </button>
   )
 }
 

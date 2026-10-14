@@ -167,6 +167,58 @@ body {
 .animate-fadein { animation: mlb-fadein 0.35s ease-out; }
 .animate-bounce-soft { animation: mlb-bounce 1.6s ease-in-out infinite; }
 
+/* ============================================================
+   Rumus matematika melayang di latar (naik-turun / bergoyang)
+   ============================================================ */
+@keyframes mlb-float {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -18px; }
+}
+@keyframes mlb-sway {
+  0%, 100% { rotate: -4deg; }
+  50% { rotate: 4deg; }
+}
+@keyframes mlb-drift {
+  0% { translate: 0 0; }
+  50% { translate: 0 -26px; }
+  100% { translate: 0 0; }
+}
+.animate-float {
+  animation:
+    mlb-float var(--dur, 7s) ease-in-out infinite,
+    mlb-sway calc(var(--dur, 7s) * 1.4) ease-in-out infinite;
+}
+.animate-drift {
+  animation: mlb-drift var(--dur, 11s) ease-in-out infinite;
+}
+
+/* Bilah memuat pada splash screen */
+@keyframes mlb-muat {
+  from { width: 4%; }
+  to { width: 100%; }
+}
+.animate-muat { animation: mlb-muat 1.7s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
+
+/* ============================================================
+   Skala tampilan: perbesar konten di layar lebar (proyektor)
+   ============================================================ */
+:root { --mlb-zoom: 1; }
+.mlb-app { zoom: var(--mlb-zoom, 1); }
+.mlb-scale { zoom: var(--mlb-zoom, 1); }
+@media (min-width: 900px)  { :root { --mlb-zoom: 1.1; } }
+@media (min-width: 1200px) { :root { --mlb-zoom: 1.22; } }
+@media (min-width: 1600px) { :root { --mlb-zoom: 1.36; } }
+@media (min-width: 2000px) { :root { --mlb-zoom: 1.5; } }
+
+/* Hormati preferensi "kurangi gerakan" */
+@media (prefers-reduced-motion: reduce) {
+  .animate-float,
+  .animate-drift,
+  .animate-bounce-soft,
+  .animate-pop,
+  .animate-fadein { animation: none !important; }
+}
+
 /* Scrollbar lembut (tema biru tua) */
 * { scrollbar-width: thin; scrollbar-color: #2E537F transparent; }
 *::-webkit-scrollbar { width: 8px; height: 8px; }

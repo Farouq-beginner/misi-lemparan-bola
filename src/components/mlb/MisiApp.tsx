@@ -2,15 +2,18 @@
 
 // ============================================================
 // MisiApp — kerangka aplikasi 16 layar:
-// header sticky (judul + progres), layar aktif, navigasi bawah
+// splash pembuka, latar rumus melayang, header sticky (judul +
+// progres + layar penuh), layar aktif, navigasi bawah
 // (Kembali · Peta · Lanjut), dan toast.
 // ============================================================
 
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { Toaster } from '@/components/ui/sonner'
 import { useMLB } from '@/lib/mlb/store'
 import { LAYAR } from '@/lib/mlb/data'
-import { Tombol } from './bits'
+import { Tombol, TombolLayarPenuh, toggleLayarPenuhFS } from './bits'
+import BackgroundRumus from './BackgroundRumus'
+import SplashScreen from './SplashScreen'
 import Layar0 from './layar/Layar0'
 import Layar1 from './layar/Layar1'
 import Layar2 from './layar/Layar2'
@@ -37,17 +40,18 @@ function Header({ layar, goto }: { layar: number; goto: (n: number) => void }) {
   const meta = LAYAR[layar]
   return (
     <header className="sticky top-0 z-40 bg-[#0D2440]/95 backdrop-blur text-white shadow-lg">
-      <div className="max-w-2xl mx-auto flex items-center gap-3 px-4 h-14">
-        <span className="text-xl" aria-hidden>🏀</span>
+      <div className="w-full max-w-2xl lg:max-w-4xl mx-auto flex items-center gap-3 px-4 h-14">
+        <span className="text-2xl" aria-hidden>🏀</span>
         <div className="min-w-0 flex-1">
-          <p className="font-extrabold text-[13.5px] leading-tight truncate">Misi Lemparan Bebas</p>
-          <p className="text-[11px] text-white/60 font-semibold leading-tight">
+          <p className="font-extrabold text-[14px] leading-tight truncate">Misi Lemparan Bebas</p>
+          <p className="text-[12px] text-white/60 font-semibold leading-tight">
             {meta.judul} · Layar {layar + 1}/16
           </p>
         </div>
+        <TombolLayarPenuh />
         <button
           onClick={() => goto(1)}
-          className="rounded-full bg-white/10 ring-1 ring-white/25 px-3.5 h-9 text-[13px] font-extrabold hover:bg-white/20 transition-colors active:scale-95"
+          className="rounded-full bg-white/10 ring-1 ring-white/25 px-3 h-9 text-[13.5px] font-extrabold hover:bg-white/20 transition-colors active:scale-95"
           aria-label="Buka Peta Alur"
         >
           🗺️ Peta
@@ -70,14 +74,14 @@ function NavigasiBawah({ layar, goto }: { layar: number; goto: (n: number) => vo
       style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
       aria-label="Navigasi layar"
     >
-      <div className="max-w-2xl mx-auto grid grid-cols-[1fr_auto_1fr] items-center gap-2 p-3">
+      <div className="w-full max-w-2xl lg:max-w-4xl mx-auto grid grid-cols-[1fr_auto_1fr] items-center gap-2 p-3">
         <Tombol varian="lembut" className="w-full" onClick={() => goto(layar - 1)} disabled={layar <= 1}>
           ← Kembali
         </Tombol>
         <button
           onClick={() => goto(1)}
           aria-label="Buka Peta Alur"
-          className="size-11 rounded-full bg-white/10 ring-1 ring-white/25 grid place-items-center text-lg hover:bg-white/20 transition-colors active:scale-95"
+          className="size-11 rounded-full bg-white/10 ring-1 ring-white/25 grid place-items-center text-xl hover:bg-white/20 transition-colors active:scale-95"
         >
           🗺️
         </button>
@@ -93,28 +97,58 @@ export default function MisiApp() {
   const { s, goto, hydrated } = useMLB()
   const layar = s.layar
 
+  // Splash pembuka: tampil sekali setiap halaman dibuka / di-refresh
+  const [splash, setSplash] = useState(true)
+  const [splashKeluar, setSplashKeluar] = useState(false)
+  useEffect(() => {
+    const t1 = setTimeout(() => setSplashKeluar(true), 1700)
+    const t2 = setTimeout(() => setSplash(false), 2450)
+    return () => { clearTimeout(t1); clearTimeout(t2) }
+  }, [])
+
+  // Pintasan F untuk masuk/keluar layar penuh
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      const el = e.target as HTMLElement | null
+      if (el && (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA' || el.isContentEditable)) return
+      if (e.key === 'f' || e.key === 'F') toggleLayarPenuhFS()
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [])
+
   useEffect(() => {
     try { document.title = `${LAYAR[layar].judul} · Misi Lemparan Bebas` } catch { /* abaikan */ }
   }, [layar])
 
-  if (!hydrated) {
-    return (
-      <div className="min-h-dvh grid place-items-center bg-[#0D2440]">
-        <span className="text-5xl animate-bounce-soft" role="img" aria-label="Memuat misi">🏀</span>
-      </div>
-    )
-  }
-
+  const tampilSplash = splash || !hydrated
   const LayarAktif = SCREENS[layar] ?? Layar0
 
   return (
-    <div className="min-h-dvh flex flex-col bg-[#0D2440]">
+    <div
+      className="mlb-app relative flex flex-col bg-[#0D2440]"
+      style={{ minHeight: 'calc(100dvh / var(--mlb-zoom, 1))' }}
+    >
+      <BackgroundRumus />
       <Toaster position="top-center" richColors closeButton />
-      {layar > 0 && <Header layar={layar} goto={goto} />}
-      <main key={layar} className="flex-1 w-full max-w-2xl mx-auto px-3 sm:px-5 pt-4 sm:pt-6 pb-32 animate-fadein">
-        <LayarAktif />
-      </main>
-      {layar > 0 && <NavigasiBawah layar={layar} goto={goto} />}
+
+      {hydrated && layar > 0 && <Header layar={layar} goto={goto} />}
+
+      {hydrated && layar === 0 && (
+        <div className="fixed top-3 right-3 z-50">
+          <TombolLayarPenuh denganLabel />
+        </div>
+      )}
+
+      {hydrated && (
+        <main key={layar} className="relative z-10 flex-1 w-full max-w-2xl lg:max-w-4xl mx-auto px-3 sm:px-5 pt-4 sm:pt-6 pb-32 animate-fadein">
+          <LayarAktif />
+        </main>
+      )}
+
+      {hydrated && layar > 0 && <NavigasiBawah layar={layar} goto={goto} />}
+
+      {tampilSplash && <SplashScreen keluar={!hydrated ? false : splashKeluar} />}
     </div>
   )
 }
