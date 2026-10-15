@@ -32,7 +32,7 @@ export default function Layar0() {
       </Tombol>
       <div className="space-y-1">
         <p className="text-white/60 text-[13.5px] sm:text-[16px] font-semibold">
-          16 layar interaktif · Progres tersimpan otomatis di perangkat ini
+          15 layar interaktif · Progres tersimpan otomatis di perangkat ini
         </p>
       </div>
     </section>
