@@ -1,7 +1,7 @@
 'use client'
 
 // Layar 3 — Rumusan Masalah: misi analis, aturan koordinat,
-// 4 aturan kerja, pilih Kartu A/B/C (disimpan untuk layar lanjutan).
+// 5 aturan kerja, pilih Kartu A/B/C (disimpan untuk layar lanjutan).
 
 import { toast } from 'sonner'
 import { useMLB } from '@/lib/mlb/store'
@@ -11,7 +11,13 @@ import type { CardId } from '@/lib/mlb/data'
 export default function Layar3() {
   const { s, gantiKartu } = useMLB()
 
-  const pilih = (k: CardId) => {
+  const pilih = (k: '' | CardId) => {
+    // Jika k adalah string kosong, maksudnya hapus kartu yang dipilih
+    if (k === '') {
+      gantiKartu('')
+      toast.success('Kartu data dihapus')
+      return
+    }
     const sebelumnya = s.kartu
     gantiKartu(k)
     if (sebelumnya && sebelumnya !== k) {
@@ -47,11 +53,12 @@ export default function Layar3() {
         </ul>
       </Panel>
 
-      <Panel tone="oranye" ikon="📋" title="4 Aturan Kerja Analis">
+      <Panel tone="oranye" ikon="📋" title="5 Aturan Kerja Analis">
         <ol className="list-decimal ml-5 space-y-1.5 text-[17px]">
           <li>Kerjakan layar secara <b>berurutan</b> — tiap layar membantu layar berikutnya.</li>
           <li><b>Tebak dulu, baru lihat.</b> Salah itu bagian dari misi, bukan aib!</li>
           <li>Koma dan titik desimal sama saja: <b>3,8 = 3.8</b>.</li>
+          <li>Tulis <b>cara menghitungmu</b>, bukan hanya jawaban — dan jangan lupa <b>satuan (m)</b>.</li>
           <li>Jawaban <b>tersimpan otomatis</b> di perangkatmu — bisa dilanjut kapan saja.</li>
         </ol>
       </Panel>
