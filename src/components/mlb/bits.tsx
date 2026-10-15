@@ -1,7 +1,7 @@
 'use client'
 
 // ============================================================
-// bits — komponen kecil bersama untuk 16 layar
+// bits — komponen kecil bersama untuk 15 layar
 // Tema: biru tua (dasar) + oranye bola basket (aksen)
 // ============================================================
 
@@ -11,7 +11,7 @@ import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Card, CardContent } from '@/components/ui/card'
 import { cn } from '@/lib/utils'
-import { GEOGEBRA } from '@/config/links'
+import { GEOGEBRA, type GeoGebraKey } from '@/config/links'
 import type { CardId } from '@/lib/mlb/data'
 
 export const NAVY = '#17345A'
@@ -137,7 +137,7 @@ export function IsiAngka({
 }
 
 export function IsiTeks({
-  value, onChange, rows = 3, placeholder, ariaLabel, className,
+  value, onChange, rows = 3, placeholder, ariaLabel, className, disabled,
 }: {
   value: string
   onChange: (v: string) => void
@@ -145,6 +145,7 @@ export function IsiTeks({
   placeholder?: string
   ariaLabel?: string
   className?: string
+  disabled?: boolean
 }) {
   return (
     <Textarea
@@ -152,6 +153,7 @@ export function IsiTeks({
       onChange={e => onChange(e.target.value)}
       rows={rows}
       placeholder={placeholder}
+      disabled={disabled}
       aria-label={ariaLabel}
       className={cn('rounded-2xl border-2 border-slate-200 bg-white font-semibold text-[#17345A] text-[17px] resize-y min-h-[76px] leading-relaxed', className)}
     />
@@ -339,7 +341,7 @@ export function BarisCek({ label, teks, benar }: { label: string; teks: string; 
 }
 
 // ---------- Pilihan kartu A/B/C ----------
-export function PilihanKartu({ value, onChange, kecil }: { value: '' | CardId; onChange: (k: CardId) => void; kecil?: boolean }) {
+export function PilihanKartu({ value, onChange, kecil }: { value: '' | CardId; onChange: (k: '' | CardId) => void; kecil?: boolean }) {
   const meta: Record<CardId, { emoji: string; warna: string }> = {
     A: { emoji: '🏀', warna: '#E8702A' },
     B: { emoji: '🔵', warna: '#3D6DB5' },
@@ -369,6 +371,21 @@ export function PilihanKartu({ value, onChange, kecil }: { value: '' | CardId; o
           </button>
         )
       })}
+      {/* Tombol hapus kartu dipilih selalu tampil di kolom ke-4 */}
+      <button
+        key="hapus"
+        type="button"
+        aria-pressed={value === ''}
+        onClick={() => onChange('') as any}
+        className={cn(
+          'rounded-2xl border-2 font-extrabold transition-all active:scale-95 text-center',
+          'p-3.5',
+          'border-[#6B7280] bg-[#F3F4F6] text-[#6B7280] hover:border-gray-400',
+        )}
+      >
+        <span className="block text-3xl leading-none mb-1" aria-hidden>🗑️</span>
+        <span className="block text-xs">Hapus</span>
+      </button>
     </div>
   )
 }
@@ -400,7 +417,7 @@ export function Skala4({ value, onChange, ariaLabel }: { value: number; onChange
 }
 
 // ---------- Tombol tautan GeoGebra (sembunyi bila kosong) ----------
-export function GGBButton({ g, label = 'Buka di GeoGebra' }: { g: 'G1' | 'G2' | 'G3'; label?: string }) {
+export function GGBButton({ g, label = 'Buka di GeoGebra' }: { g: GeoGebraKey; label?: string }) {
   const url = GEOGEBRA[g]
   if (!url) return null
   return (
