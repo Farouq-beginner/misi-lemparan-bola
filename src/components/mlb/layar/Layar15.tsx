@@ -81,7 +81,7 @@ export default function Layar15() {
         <Tombol className="flex-1" onClick={salin}>📋 Salin Jawabanku</Tombol>
       </div>
       <p className="text-center text-white/45 text-[13.5px] font-semibold">
-        Kamu telah mengunjungi {s.progres.length}/16 layar · jawaban tersimpan di perangkat ini
+        Kamu telah mengunjungi {s.progres.length}/15 layar · jawaban tersimpan di perangkat ini
       </p>
     </div>
   )
