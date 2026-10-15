@@ -1,7 +1,7 @@
 'use client'
 
 // ============================================================
-// MisiApp — kerangka aplikasi 16 layar:
+// MisiApp — kerangka aplikasi 15 layar:
 // splash pembuka, latar rumus melayang, header sticky (judul +
 // progres + layar penuh), layar aktif, navigasi bawah
 // (Kembali · Peta · Lanjut), dan toast.
@@ -18,7 +18,6 @@ import Layar0 from './layar/Layar0'
 import Layar1 from './layar/Layar1'
 import Layar2 from './layar/Layar2'
 import Layar3 from './layar/Layar3'
-import Layar4 from './layar/Layar4'
 import Layar5 from './layar/Layar5'
 import Layar6 from './layar/Layar6'
 import Layar7 from './layar/Layar7'
@@ -32,7 +31,7 @@ import Layar14 from './layar/Layar14'
 import Layar15 from './layar/Layar15'
 
 const SCREENS = [
-  Layar0, Layar1, Layar2, Layar3, Layar4, Layar5, Layar6, Layar7,
+  Layar0, Layar1, Layar2, Layar3, Layar5, Layar6, Layar7,
   Layar8, Layar9, Layar10, Layar11, Layar12, Layar13, Layar14, Layar15,
 ]
 
@@ -45,7 +44,7 @@ function Header({ layar, goto }: { layar: number; goto: (n: number) => void }) {
         <div className="min-w-0 flex-1">
           <p className="font-extrabold text-[14px] leading-tight truncate">Misi Lemparan Bebas</p>
           <p className="text-[12px] text-white/60 font-semibold leading-tight">
-            {meta.judul} · Layar {layar + 1}/16
+            {meta.judul} · Layar {layar + 1}/15
           </p>
         </div>
         <TombolLayarPenuh />
@@ -57,10 +56,10 @@ function Header({ layar, goto }: { layar: number; goto: (n: number) => void }) {
           🗺️ Peta
         </button>
       </div>
-      <div className="h-1.5 bg-white/10" role="progressbar" aria-valuenow={layar + 1} aria-valuemin={1} aria-valuemax={16} aria-label="Progres misi">
+      <div className="h-1.5 bg-white/10" role="progressbar" aria-valuenow={layar + 1} aria-valuemin={1} aria-valuemax={15} aria-label="Progres misi">
         <div
           className="h-full bg-gradient-to-r from-[#FB923C] to-[#F97316] transition-all duration-300"
-          style={{ width: `${((layar + 1) / 16) * 100}%` }}
+          style={{ width: `${((layar + 1) / 15) * 100}%` }}
         />
       </div>
     </header>
@@ -85,8 +84,8 @@ function NavigasiBawah({ layar, goto }: { layar: number; goto: (n: number) => vo
         >
           🗺️
         </button>
-        <Tombol className="w-full" onClick={() => goto(layar >= 15 ? 1 : layar + 1)}>
-          {layar >= 15 ? 'Peta 🗺️' : 'Lanjut →'}
+        <Tombol className="w-full" onClick={() => goto(layar >= 14 ? 1 : layar + 1)}>
+          {layar >= 14 ? 'Peta 🗺️' : 'Lanjut →'}
         </Tombol>
       </div>
     </nav>
