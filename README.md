@@ -210,7 +210,3 @@ peramban) ada di [`worklog.md`](worklog.md).
 
 
 ---
-
-
-Catatan rinci tiap tahap pembangunan (rancangan, keputusan arsitektur, hasil verifikasi
-peramban) ada di [`worklog.md`](worklog.md).
