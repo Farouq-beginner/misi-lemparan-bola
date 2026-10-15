@@ -1,15 +1,26 @@
 'use client'
 
-// Layar 13 — Formalisasi: rangkuman konsep, miskonsepsi tanda p,
-// dan cek dugaan awal dari layar 4.
+// Layar 13 — Formalisasi: rangkuman konsep, kesimpulan akhir
+// (LKPD Bagian G, 3 isian pilihan kata), miskonsepsi tanda p,
+// dan catatan akhir milik murid.
 
-import { useMLB } from '@/lib/mlb/store'
-import { CARDS } from '@/lib/mlb/data'
-import { JudulLayar, Panel, Chip, KotakHasil, IsiTeks } from '../bits'
+import { useMLB, KATA_G } from '@/lib/mlb/store'
+import { JudulLayar, Panel, PilihKapsul, Chip, IsiTeks, BarisCek, KotakHasil } from '../bits'
+
+const opsiKataG = KATA_G.map(k => ({ v: k, label: k }))
+const KUNCI_G = ['tanda a', 'tinggi maksimum', 'tengah-tengah', 'a'] as const
 
 export default function Layar13() {
   const { s, upd } = useMLB()
-  const d = s.dugaan
+  const g = s.kesimpG
+
+  const gOk = (i: number) => g[i] === KUNCI_G[i]
+  const gDiisi = g.every(v => v !== '')
+  const gSemua = g.every((_, i) => gOk(i))
+
+  const kc = s.kesimpC
+  const adaKesimpC =
+    kc.puncakP !== '' || kc.puncakQ !== '' || kc.aPos !== '' || kc.aNeg !== '' || kc.geserP !== '' || kc.geserQ !== ''
 
   return (
     <div className="space-y-4">
@@ -23,11 +34,68 @@ export default function Layar13() {
           <li>🥎 <b>a &gt; 0</b> terbuka ke atas (senyum); <b>a &lt; 0</b> terbuka ke bawah (lintasan bola).</li>
           <li>🧪 Uji fungsi lintasan: selalu <b>f(0) = 2</b>, karena bola lepas dari (0 ; 2).</li>
         </ul>
-        {s.kesimpulan.trim() && (
+        {adaKesimpC && (
           <div className="rounded-2xl bg-white/10 ring-1 ring-white/20 p-3.5">
-            <p className="text-[13px] font-black uppercase tracking-wide text-[#FDBA74]">Kesimpulanmu di Layar 7</p>
-            <p className="mt-1 text-[16px] italic leading-relaxed">“{s.kesimpulan}”</p>
+            <p className="text-[13px] font-black uppercase tracking-wide text-[#FDBA74]">4 Kesimpulanmu di Layar 7</p>
+            <ul className="mt-1 space-y-1 text-[16px] italic leading-relaxed">
+              <li>1. Puncak di ( {kc.puncakP || '…'} ; {kc.puncakQ || '…'} )</li>
+              <li>2. a positif → {kc.aPos || '…'} · a negatif → {kc.aNeg || '…'}</li>
+              <li>3. (x − p) menggeser ke {kc.geserP || '…'} sejauh p satuan</li>
+              <li>4. + q menggeser ke {kc.geserQ || '…'} sejauh q satuan</li>
+            </ul>
           </div>
+        )}
+      </Panel>
+
+      <Panel tone="hijau" ikon="📝" title="Kesimpulan Akhir (LKPD Bagian G)">
+        <p className="flex flex-wrap items-center gap-2 text-[15px] font-extrabold text-[#17345A]">
+          Pilihan kata:
+          {KATA_G.map(w => <Chip key={w} tone="oranye">{w}</Chip>)}
+        </p>
+
+        <div className="space-y-4">
+          <div className="rounded-2xl bg-white ring-1 ring-slate-200 p-3.5 space-y-2.5">
+            <div className="font-extrabold text-[#17345A] text-[17px]">
+              1️⃣ Arah buka parabola ditentukan oleh
+              <PilihKapsul value={g[0]} onChange={v => upd(d => { d.kesimpG[0] = v })} opsi={opsiKataG} />
+              <span className="mt-1 block">
+                Pada titik puncak (p ; q), p adalah jarak mendatar dan q adalah
+              </span>
+              <PilihKapsul value={g[1]} onChange={v => upd(d => { d.kesimpG[1] = v })} opsi={opsiKataG} />
+              <span className="mt-1 block font-normal text-[16px] text-slate-500">bola.</span>
+            </div>
+          </div>
+
+          <div className="rounded-2xl bg-white ring-1 ring-slate-200 p-3.5 space-y-2.5">
+            <div className="font-extrabold text-[#17345A] text-[17px]">
+              2️⃣ Sumbu simetri berada di
+              <PilihKapsul value={g[2]} onChange={v => upd(d => { d.kesimpG[2] = v })} opsi={opsiKataG} />
+              <span className="mt-1 block font-normal text-[16px] text-slate-500">antara dua titik yang tingginya sama.</span>
+            </div>
+          </div>
+
+          <div className="rounded-2xl bg-white ring-1 ring-slate-200 p-3.5 space-y-2.5">
+            <div className="font-extrabold text-[#17345A] text-[17px]">
+              3️⃣ Fungsi kuadrat bisa dicari dari titik puncak dan satu titik lain karena hanya ada satu bilangan yang belum diketahui, yaitu
+              <PilihKapsul value={g[3]} onChange={v => upd(d => { d.kesimpG[3] = v })} opsi={opsiKataG} />
+            </div>
+          </div>
+        </div>
+
+        {gDiisi && (
+          <div className="space-y-2">
+            <BarisCek label="1a" teks="arah buka ← tanda a" benar={gOk(0)} />
+            <BarisCek label="1b" teks="q = tinggi maksimum bola" benar={gOk(1)} />
+            <BarisCek label="2" teks="sumbu simetri ← tengah-tengah" benar={gOk(2)} />
+            <BarisCek label="3" teks="satu-satunya bilangan belum diketahui ← a" benar={gOk(3)} />
+          </div>
+        )}
+
+        {gSemua && (
+          <KotakHasil status="ok" judul="Semua kesimpulan akhir tepat! 🏆">
+            Arah buka ← tanda a · q = tinggi maksimum · sumbu simetri = tengah-tengah dua titik setinggi ·
+            yang dicari dari puncak + satu titik hanyalah a. Hebat — misi analis selesai!
+          </KotakHasil>
         )}
       </Panel>
 
@@ -47,38 +115,16 @@ export default function Layar13() {
         </p>
       </Panel>
 
-      <Panel tone="biru" ikon="🔎" title="Cek Dugaan Awalmu (Layar 4)">
-        {d.lemparan ? (
-          <>
-            <p className="text-[17px] italic leading-relaxed text-[#17345A]">
-              “Aku menduga lemparan <b>{d.lemparan}</b> masuk ring, karena {d.alasan || '…'}.”
-            </p>
-            <div className="flex flex-wrap gap-2">
-              <Chip tone="abu">dugaanmu: {d.lemparan}</Chip>
-              <Chip tone="hijau">fakta: lemparan A masuk (f(5) = 3)</Chip>
-            </div>
-            {d.lemparan === 'A' ? (
-              <KotakHasil status="ok" judul="Dugaanmu TERBUKTI! 🎉">
-                Analis teliti — dugaanmu sejalan dengan hitungan f(5) = 3, tepat di ring.
-              </KotakHasil>
-            ) : (
-              <KotakHasil status="info" judul="Dugaan perlu dikoreksi">
-                Ternyata lemparan {d.lemparan} tidak masuk ({CARDS[d.lemparan].selisih}).
-                Dugaan meleset itu wajar — analis data mengoreksinya dengan hitungan, bukan perasaan. 💪
-              </KotakHasil>
-            )}
-          </>
-        ) : (
-          <p className="italic text-[17px]">
-            Kamu belum mengisi dugaan di Layar 4. Tidak apa — yang penting sekarang kamu tahu:
-            <b> lemparan A masuk</b> karena f(5) = 3 (pas di ring).
-          </p>
-        )}
+      <Panel tone="biru" ikon="✍️" title="Catatan Formalisasi">
+        <p className="text-[17px]">
+          Rapikan pengetahuanmu dengan bahasa sendiri — hal paling penting yang kamu bawa
+          dari misi ini.
+        </p>
         <IsiTeks
           value={s.formalCatatan}
           onChange={v => upd(d => { d.formalCatatan = v })}
           rows={2}
-          placeholder="Catatanmu sekarang (opsional): setelah belajar ini, dugaanku berubah menjadi…"
+          placeholder="Catatanmu (opsional): puncak (p ; q), sumbu simetri x = p, dan f(5) menentukan masuk atau tidak…"
           ariaLabel="Catatan formalisasi"
         />
       </Panel>
