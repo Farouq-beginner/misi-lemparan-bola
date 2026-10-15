@@ -1,7 +1,7 @@
 // ============================================================
 // Misi Lemparan Bebas — data kartu, kunci jawaban, meta layar
 // Sumber: Rancangan Web Interaktif "Misi Lemparan Bebas"
-// (19 slide PPT Fungsi Kuadrat → 16 layar interaktif)
+// (19 slide PPT Fungsi Kuadrat → 15 layar interaktif)
 // ============================================================
 
 export type CardId = 'A' | 'B' | 'C'
@@ -108,7 +108,7 @@ export const JEMBATAN: FungsiTebak[] = [
   },
 ]
 
-// ---------- Meta 16 layar ----------
+// ---------- Meta 15 layar ----------
 export interface LayarMeta { judul: string; fase: number }
 
 export const LAYAR: LayarMeta[] = [
@@ -116,7 +116,6 @@ export const LAYAR: LayarMeta[] = [
   { judul: 'Peta Alur', fase: 0 },
   { judul: 'Orientasi', fase: 1 },
   { judul: 'Rumusan Masalah', fase: 2 },
-  { judul: 'Dugaan Pertama', fase: 3 },
   { judul: 'Tebak Dulu', fase: 3 },
   { judul: 'Hasil Tebakan', fase: 3 },
   { judul: 'Kesimpulan Konsep', fase: 4 },
@@ -136,14 +135,14 @@ export interface FaseMeta { n: number; emoji: string; nama: string; desc: string
 export const FASES: FaseMeta[] = [
   { n: 1, emoji: '👀', nama: 'Orientasi', desc: 'Amati tiga lemparan bebas', dari: 2, sampai: 2 },
   { n: 2, emoji: '🧩', nama: 'Rumusan Masalah', desc: 'Misi pelatih & pilih kartu', dari: 3, sampai: 3 },
-  { n: 3, emoji: '💭', nama: 'Dugaan & Tebak', desc: 'Dugaan awal + tebak 3 grafik', dari: 4, sampai: 6 },
-  { n: 4, emoji: '💡', nama: 'Kesimpulan Konsep', desc: 'Bentuk f(x) = a(x − p)² + q', dari: 7, sampai: 7 },
-  { n: 5, emoji: '📊', nama: 'Plot & Analisis', desc: 'Titik, sumbu simetri, cari a', dari: 8, sampai: 10 },
-  { n: 6, emoji: '🏀', nama: 'Hitung & Keputusan', desc: 'f(5): masuk atau tidak', dari: 11, sampai: 12 },
-  { n: 7, emoji: '📝', nama: 'Formalisasi & Refleksi', desc: 'Rangkuman, miskonsepsi, kuis', dari: 13, sampai: 14 },
+  { n: 3, emoji: '💭', nama: 'Tebak Dulu', desc: 'Tebak puncak & arah buka 3 grafik', dari: 4, sampai: 5 },
+  { n: 4, emoji: '💡', nama: 'Kesimpulan Konsep', desc: 'Bentuk f(x) = a(x − p)² + q', dari: 6, sampai: 6 },
+  { n: 5, emoji: '📊', nama: 'Plot & Analisis', desc: 'Titik, sumbu simetri, cari a', dari: 7, sampai: 9 },
+  { n: 6, emoji: '🏀', nama: 'Hitung & Keputusan', desc: 'f(5): masuk atau tidak', dari: 10, sampai: 11 },
+  { n: 7, emoji: '📝', nama: 'Formalisasi & Refleksi', desc: 'Rangkuman, miskonsepsi, kuis', dari: 12, sampai: 13 },
 ]
 
-export const LAYAR_PENUTUP = 15
+export const LAYAR_PENUTUP = 14
 
 // ---------- Kuis refleksi 3 soal (layar 14) ----------
 export interface KuisSoal {
