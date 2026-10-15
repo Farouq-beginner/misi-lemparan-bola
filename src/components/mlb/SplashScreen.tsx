@@ -61,7 +61,7 @@ export default function SplashScreen({ keluar }: { keluar: boolean }) {
         </h1>
 
         <p className="text-white/75 text-[16px] sm:text-xl font-semibold max-w-md leading-relaxed">
-          Menyiapkan 16 layar petualangan fungsi kuadrat…
+          Menyiapkan 15 layar petualangan fungsi kuadrat…
         </p>
 
         {/* bilah memuat */}
