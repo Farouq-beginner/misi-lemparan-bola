@@ -10,6 +10,7 @@ export const GEOGEBRA = {
   G1: '', // Layar 5–6 "Tebak Dulu & Hasil Tebakan": tiga fungsi (x-3)^2, (x-3)^2+4, -(x-3)^2+4 dengan y = x^2 pembanding
   G2: '', // Layar 8 "Plot dan Amati": bidang koordinat kosong + titik Kartu A, B, C
   G3: '', // Layar 11 "Hitung f(5)" (opsional): simulator lemparan slider a, p, q, titik lepas (0;2), ring (5;3)
+  G4: 'https://www.geogebra.org/calculator', // Layar 5 "Ayo Mengingat": observasi bentuk y = x² vs y = −x² (soal 1 diarahkan ke GeoGebra, tidak dijawab tulisan)
 } as const
 
 export type GeoGebraKey = keyof typeof GEOGEBRA
