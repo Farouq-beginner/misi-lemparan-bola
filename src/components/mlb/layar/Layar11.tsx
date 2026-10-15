@@ -7,9 +7,9 @@
 import { useState } from 'react'
 import { toast } from 'sonner'
 import { useMLB } from '@/lib/mlb/store'
-import { CARDS, ZONA, type CardId } from '@/lib/mlb/data'
+import { CARDS, ZONA, RING, type CardId } from '@/lib/mlb/data'
 import { parseNum, eqTol, fmt } from '@/lib/mlb/util'
-import { JudulLayar, Panel, Chip, IsiAngka, Tombol, KotakHasil, Petunjuk, PilihKapsul, GGBButton, PilihanKartu } from '../bits'
+import { JudulLayar, Panel, Chip, IsiAngka, IsiTeks, Tombol, KotakHasil, Petunjuk, PilihKapsul, GGBButton, PilihanKartu } from '../bits'
 import { cn } from '@/lib/utils'
 
 export default function Layar11() {
@@ -51,6 +51,32 @@ export default function Layar11() {
   }
 
   const keputusanBenar = s.f5.keputusan !== '' && (s.f5.keputusan === 'masuk') === kartu.masuk
+
+  const selisihv = parseNum(s.f5.selisih)
+  const selisihOk = selisihv !== null && Math.abs(selisihv - (kartu.f5 - RING.y)) <= 0.01
+  const cekSelisih = () => {
+    if (selisihv === null) { toast.error('Isi dulu selisihnya ya.'); return }
+    if (selisihOk) { toast.success(`Tepat! f(5) − 3 = ${fmt(kartu.f5 - RING.y)} m.`); return }
+    toast.error(`Belum tepat — ingat: ${fmt(kartu.f5)} − 3, dan hasilnya bisa negatif.`)
+  }
+
+  // Saran geser puncak (LKPD F Langkah 4): benar bila f(5) di luar zona.
+  const kurangTinggi = kartu.f5 < ZONA.bawah
+  const kepalaSaran = { mendatar: kurangTinggi ? 'kanan' : 'kiri', vertikal: kurangTinggi ? 'naik' : 'turun' }
+  const saranOk =
+    kartu.masuk
+      ? s.f5.saran.tulis.trim().length >= 5
+      : s.f5.saran.mendatar === kepalaSaran.mendatar && s.f5.saran.vertikal === kepalaSaran.vertikal
+  const cekSaran = () => {
+    if (kartu.masuk) {
+      if (s.f5.saran.tulis.trim().length < 5) { toast.error('Tulis dulu satu kalimat saran pertahananmu.'); return }
+      toast.success('Saran tercatat — analis handal menjaga konsistensi! 💪')
+      return
+    }
+    if (saranOk) { toast.success('Saran tepat — geser puncak ke arah yang benar! 🧭'); return }
+    upd(d => { d.f5.cobaSaran += 1 })
+    toast.error('Belum tepat — perhatikan arah mana yang menaikkan/menurunkan f(5).')
+  }
 
   const cekKeputusan = () => {
     if (s.f5.keputusan === '') {
@@ -169,6 +195,99 @@ export default function Layar11() {
                 f(5) = {fmt(kartu.f5)} m {masukZona(kartu.f5) ? '(di dalam zona 2,9–3,1 m)' : '(di luar zona 2,9–3,1 m)'} — periksa lagi aturannya!
               </KotakHasil>
             )
+          )}
+        </Panel>
+      )}
+
+      {/* Langkah 2 — bandingkan dengan tinggi ring */}
+      {f5Selesai && (
+        <Panel ikon="📏" title="Langkah 2 — Bandingkan dengan Tinggi Ring">
+          <p className="text-[17px]">
+            Ring tingginya <b>3 m</b>. Berapa selisih tinggi bola dengan ring?
+          </p>
+          <div className="flex items-center gap-2.5 flex-wrap text-[17px] font-extrabold text-[#17345A]">
+            <span>f(5) − 3 =</span>
+            <IsiAngka
+              value={s.f5.selisih}
+              onChange={v => upd(d => { d.f5.selisih = v })}
+              status={s.f5.selisih ? (selisihOk ? 'ok' : 'salah') : null}
+              ariaLabel="Selisih f(5) dengan tinggi ring"
+            />
+            <span>m</span>
+            <Tombol varian="navy" className="h-11 px-4 text-[16px]" onClick={cekSelisih}>Cek</Tombol>
+            {selisihOk && <Chip tone={kartu.f5 > RING.y ? 'kuning' : kartu.f5 < RING.y ? 'biru' : 'hijau'}>{fmt(kartu.f5 - RING.y)} m {kartu.f5 > RING.y ? 'di atas ring' : kartu.f5 < RING.y ? 'di bawah ring' : 'tepat setinggi ring'}</Chip>}
+          </div>
+        </Panel>
+      )}
+
+      {/* Langkah 3 — alasan berangka + Langkah 4 — saran */}
+      {keputusanBenar && (
+        <Panel tone="biru" ikon="✍️" title="Langkah 3 — Tulis Alasanmu dengan Angka">
+          <p className="text-[17px] font-extrabold text-[#17345A]">
+            Alasanku: tinggi bola di x = 5 adalah {fmt(kartu.f5)} m, sedangkan ring tingginya 3 m, sehingga…
+          </p>
+          <IsiTeks
+            value={s.f5.alasan}
+            onChange={v => upd(d => { d.f5.alasan = v })}
+            rows={2}
+            placeholder={kartu.masuk ? 'contoh: bola tepat masuk karena selisihnya 0 m…' : `contoh: bola ${kartu.f5 > RING.y ? 'melewati ring' : 'jatuh di bawah ring'} karena selisihnya ${fmt(Math.abs(kartu.f5 - RING.y))} m…`}
+            ariaLabel="Alasan berangka"
+          />
+          <p className="text-[13px] font-bold text-slate-400">✓ Jawaban terbuka — tidak dinilai, tersimpan otomatis.</p>
+        </Panel>
+      )}
+
+      {keputusanBenar && (
+        <Panel tone="navy" ikon="🧭" title="Langkah 4 — Saran untuk Pemain">
+          {kartu.masuk ? (
+            <div className="space-y-2">
+              <p className="text-[17px]">
+                Lemparanmu <b>sudah masuk</b> 🎉. Tulis satu kalimat saran agar pemain bisa <b>mempertahankannya</b>:
+              </p>
+              <IsiTeks
+                value={s.f5.saran.tulis}
+                onChange={v => upd(d => { d.f5.saran.tulis = v })}
+                rows={2}
+                placeholder="contoh: pertahankan puncak di (3 ; 3,8) dan lepas dari (0 ; 2) agar f(5) tetap 3 m…"
+                ariaLabel="Saran pertahanan"
+              />
+              <Tombol varian="navy" onClick={cekSaran}>Simpan Saran</Tombol>
+            </div>
+          ) : (
+            <div className="space-y-2.5">
+              <p className="text-[17px]">
+                Agar bola masuk ring, titik puncak sebaiknya digeser ke:
+              </p>
+              <div className="space-y-1.5">
+                <p className="text-[16px] font-bold text-[#17345A]">↔️ Mendatar:</p>
+                <PilihKapsul
+                  value={s.f5.saran.mendatar}
+                  onChange={v => upd(d => { d.f5.saran.mendatar = v as '' | 'kiri' | 'kanan' })}
+                  opsi={[
+                    { v: 'kiri', label: '⬅️ kiri' },
+                    { v: 'kanan', label: '➡️ kanan' },
+                  ]}
+                />
+              </div>
+              <div className="space-y-1.5">
+                <p className="text-[16px] font-bold text-[#17345A]">↕️ Vertikal:</p>
+                <PilihKapsul
+                  value={s.f5.saran.vertikal}
+                  onChange={v => upd(d => { d.f5.saran.vertikal = v as '' | 'turun' | 'naik' })}
+                  opsi={[
+                    { v: 'naik', label: '⬆️ lebih tinggi' },
+                    { v: 'turun', label: '⬇️ lebih rendah' },
+                  ]}
+                />
+              </div>
+              <Tombol varian="navy" onClick={cekSaran}>Cek Saran</Tombol>
+              {s.f5.cobaSaran >= 2 && !saranOk && (
+                <Petunjuk>
+                  f(5) mu {fmt(kartu.f5)} m {kurangTinggi ? '< 2,9 m — bola kurang tinggi: puncak harus lebih tinggi' : '> 3,1 m — bola kelewatan tinggi: puncak harus lebih rendah'},
+                  dan digeser {kepalaSaran.mendatar} agar di x = 5 bola tepat {kurangTinggi ? 'naik' : 'turun'} ke ring.
+                </Petunjuk>
+              )}
+            </div>
           )}
         </Panel>
       )}
