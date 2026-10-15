@@ -1,7 +1,7 @@
 'use client'
 
-// Layar 2 — Orientasi: Gambar 1 (tiga lemparan + ring (5;3)),
-// ketuk lemparan untuk menyorot lintasan, 2 pertanyaan pemantik.
+// Layar 2 — Orientasi: Gambar 1 (tiga titik lemparan A/B/C + ring (5;3)),
+// ketuk titik atau tombol untuk menyorot satu lemparan, 2 pertanyaan pemantik.
 
 import { useState } from 'react'
 import { useMLB } from '@/lib/mlb/store'
@@ -50,14 +50,14 @@ export default function Layar2() {
           ))}
         </div>
         <p className="text-[13px] text-slate-400 font-bold px-1 pt-1.5">
-          💡 Ketuk lintasan di gambar atau tombol di atas untuk menyorot satu lemparan.
+          💡 Ketuk titik A, B, C di gambar atau tombol di atas untuk menyorot satu lemparan.
         </p>
       </div>
 
       <Panel tone="biru" ikon="💭" title="❓ Pertanyaan Pemantik">
         <div className="space-y-3.5">
           <div className="space-y-2">
-            <p className="font-extrabold text-[#17345A]">1️⃣ Menurutmu, mengapa hanya satu lemparan yang masuk ring?</p>
+            <p className="font-extrabold text-[#17345A]">1️⃣ Mengapa lemparan yang sama-sama dilepas dari ketinggian 2 m bisa berakhir berbeda?</p>
             <IsiTeks
               value={s.pemantik.q1}
               onChange={v => upd(d => { d.pemantik.q1 = v })}
@@ -66,7 +66,7 @@ export default function Layar2() {
             />
           </div>
           <div className="space-y-2">
-            <p className="font-extrabold text-[#17345A]">2️⃣ Kalau lintasan bola adalah grafik fungsi, apa yang menentukan tinggi maksimumnya?</p>
+            <p className="font-extrabold text-[#17345A]">2️⃣ Jika kita hanya tahu titik tertinggi bola dan satu titik lain di lintasannya, dapatkah kita memprediksi seluruh lintasan?</p>
             <IsiTeks
               value={s.pemantik.q2}
               onChange={v => upd(d => { d.pemantik.q2 = v })}
