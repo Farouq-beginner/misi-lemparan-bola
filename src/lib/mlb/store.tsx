@@ -196,6 +196,7 @@ export interface MLBState {
   simetri: JawabanKartu['simetri']
   aCari: JawabanKartu['aCari']
   f5: JawabanKartu['f5']
+  dugaan: { lemparan: string; alasan: string }
   cek3: Record<CardId, Cek3>
   rekapTulis: string
   formalCatatan: string
@@ -230,6 +231,7 @@ function defaultState(): MLBState {
     simetri: { duo: [], duo2: [], x1: '', x2: '', tengah: '', sumbu: '', p: '', q: '', coba: { tengah: 0, sumbu: 0, p: 0, q: 0 }, arti: { p: '', q: '' } },
     aCari: { ...ACARI_KOSONG, uji: { ...ACARI_KOSONG.uji }, coba: { ...ACARI_KOSONG.coba } },
     f5: { ...F5_KOSONG, s: [...F5_KOSONG.s], coba: [...F5_KOSONG.coba], saran: { ...F5_KOSONG.saran } },
+    dugaan: { lemparan: '', alasan: '' },
     cek3: {
       A: { f5: '', keputusan: '', dicek: false },
       B: { f5: '', keputusan: '', dicek: false },
@@ -302,6 +304,7 @@ function loadState(): { st: MLBState; skemaLama: boolean } {
           s: arr<string>(p.f5?.s, d.f5.s),
           coba: arr<number>(p.f5?.coba, d.f5.coba),
         },
+        dugaan: typeof p.dugaan === 'object' && p.dugaan !== null ? { lemparan: String(p.dugaan.lemparan), alasan: String(p.dugaan.alasan) } : d.dugaan,
         cek3: {
           A: { ...d.cek3.A, ...(p.cek3?.A ?? {}) },
           B: { ...d.cek3.B, ...(p.cek3?.B ?? {}) },
