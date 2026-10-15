@@ -8,22 +8,22 @@
 
 import React, { useState } from 'react'
 import Graph, { curvePath } from './Graph'
-import { CARDS, fxCard, fxVal, type CardId } from '@/lib/mlb/data'
+import { CARDS, fxVal, type CardId } from '@/lib/mlb/data'
 import { fmt } from '@/lib/mlb/util'
 
 const WARNA: Record<CardId, string> = { A: '#E8702A', B: '#3D6DB5', C: '#2E9E6B' }
-// sampai-x tiap lintasan di Gambar 1 (A berhenti di ring)
-const SAMPAI: Record<CardId, number> = { A: 5, B: 5.27, C: 6.9 }
 
 // ------------------------------------------------------------
-// Gambar 1 — tiga lemparan bebas + ring (5 ; 3). Dapat diketuk.
+// Gambar 1 — tiga titik lemparan A, B, C + ring (5 ; 3).
+// Tanpa garis lintasan: hanya titik puncak tiap lemparan.
+// Dapat diketuk untuk menyorot satu lemparan.
 // ------------------------------------------------------------
 export function SceneLemparan({ sorot, onSorot }: { sorot: CardId | null; onSorot: (k: CardId | null) => void }) {
   return (
     <Graph
       xMin={-0.7} xMax={7.6} yMin={-0.6} yMax={4.7} H={330}
       xLabel="x — jarak (m)" yLabel="y — tinggi (m)"
-      ariaLabel="Gambar 1 — tiga lintasan lemparan bebas menuju ring di titik (5 ; 3)"
+      ariaLabel="Gambar 1 — tiga titik lemparan A, B, C di sekitar ring di titik (5 ; 3)"
     >
       {m => (
         <>
@@ -47,20 +47,17 @@ export function SceneLemparan({ sorot, onSorot }: { sorot: CardId | null; onSoro
           {/* titik lepas */}
           <circle cx={m.px(0)} cy={m.py(2)} r="9" fill="#F97316" stroke="#17345A" strokeWidth="2.5" />
           <text x={m.px(0.1)} y={m.py(1.58)} fontSize="12.5" fontWeight="800" fill="#17345A">lepas (0 ; 2)</text>
-          {/* tiga lintasan */}
+          {/* tiga titik lemparan — tanpa garis lintasan */}
           {(['A', 'B', 'C'] as const).map(k => {
             const c = CARDS[k]
             const aktif = sorot === k
-            const op = sorot && !aktif ? 0.15 : 1
+            const op = sorot && !aktif ? 0.2 : 1
             return (
               <g key={k} onPointerDown={() => onSorot(aktif ? null : k)} style={{ cursor: 'pointer' }}>
-                <path
-                  d={curvePath(x => fxCard(c, x), m, 0, SAMPAI[k])}
-                  fill="none" stroke={WARNA[k]} strokeWidth={aktif ? 7 : 4.5} opacity={op} strokeLinecap="round"
-                />
-                <circle cx={m.px(c.peak.x)} cy={m.py(c.peak.y)} r={aktif ? 9 : 7} fill={aktif ? WARNA[k] : '#FFFDF9'} stroke={WARNA[k]} strokeWidth="3" opacity={op} />
+                <title>{`Ketuk untuk menyorot Lemparan ${k}`}</title>
+                <circle cx={m.px(c.peak.x)} cy={m.py(c.peak.y)} r={aktif ? 12 : 10} fill={aktif ? WARNA[k] : '#FFFDF9'} stroke={WARNA[k]} strokeWidth="3.5" opacity={op} />
                 <text
-                  x={m.px(c.peak.x)} y={m.py(c.peak.y) - 13} fontSize={aktif ? 14 : 12.5} fontWeight="900"
+                  x={m.px(c.peak.x)} y={m.py(c.peak.y) - (aktif ? 18 : 16)} fontSize={aktif ? 14 : 13} fontWeight="900"
                   fill={WARNA[k]} textAnchor="middle" opacity={op}
                 >
                   {aktif ? `Lemparan ${k}` : k}
