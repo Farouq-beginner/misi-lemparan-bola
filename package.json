@@ -2,7 +2,7 @@
   "name": "misi-lemparan-bola",
   "version": "1.0.0",
   "private": true,
-  "description": "Web belajar interaktif 16 layar: fungsi kuadrat sebagai model lintasan parabola (Matematika Fase E, Kelas X)",
+  "description": "Web belajar interaktif 15 layar: fungsi kuadrat sebagai model lintasan parabola (Matematika Fase E, Kelas X)",
   "scripts": {
     "dev": "next dev -p 3000 2>&1 | tee dev.log",
     "build": "next build && node scripts/salin-standalone.mjs",
