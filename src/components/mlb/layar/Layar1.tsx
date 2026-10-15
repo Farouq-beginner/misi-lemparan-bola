@@ -93,7 +93,7 @@ export default function Layar1() {
         <span className="text-4xl" aria-hidden>🏁</span>
         <span className="flex-1 min-w-0">
           <span className="block font-extrabold text-[#17345A]">Penutup</span>
-          <span className="block text-[13.5px] text-slate-500 font-semibold">3 kesimpulan + pertanyaan transfer · Layar 16</span>
+          <span className="block text-[13.5px] text-slate-500 font-semibold">3 kesimpulan + pertanyaan transfer · Layar 15</span>
         </span>
         <span>
           {s.progres.includes(LAYAR_PENUTUP) ? <Chip tone="hijau">✓ selesai</Chip> : <Chip tone="abu">belum</Chip>}
@@ -107,7 +107,7 @@ export default function Layar1() {
         </Tombol>
       </div>
       <p className="text-center text-white/45 text-[13.5px] font-semibold">
-        Progres: {s.progres.length}/16 layar dikunjungi · tersimpan otomatis di perangkat ini
+        Progres: {s.progres.length}/15 layar dikunjungi · tersimpan otomatis di perangkat ini
       </p>
     </div>
   )
